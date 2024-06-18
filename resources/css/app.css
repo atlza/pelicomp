@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+section{
+    @apply mx-8
+}
+
+@font-face {
+    font-family: 'Forta';
+    src: url('../fonts/FORTA-1-0.eot');
+    src: local('Forta'), local('forta'),
+    url('../fonts/FORTA-1-0.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/FORTA-1-0.woff2') format('woff2'),
+    url('../fonts/FORTA-1-0.woff') format('woff'),
+    url('../fonts/FORTA-1-0.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+header{
+    @apply py-4 flex justify-between;
+
+    a.home{
+        font-family: Forta;
+        color: #041D54;
+        @apply text-2xl pl-10;
+
+        background: url(../imgs/CameraRoll.png) center left no-repeat;
+        background-size: contain;
+    }
+}
+
+html{
+    background: url(../imgs/peloches.min.jpg) center bottom no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+
+    .box-login{
+        @apply w-2/3 sm:w-1/2 md:w-1/3 2xl:w-1/4 text-center self-center border p-8 rounded
+    }
+
+    table, .box-login{
+        /*background: rgba(247, 250, 252, 0.8);*/
+        background: rgba(247, 250, 252);
+    }
+}
