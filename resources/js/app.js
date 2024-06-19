@@ -13,7 +13,7 @@ createIcons({
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    new Grid({
+    const grid = new Grid({
         from: document.getElementById('sourceTable'),
         sort: true,
         search: true,
@@ -24,16 +24,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 'placeholder': '🔍 Recherche...'
             }
         }
-    }).render(document.getElementById('destinationWrapper'));
+    });
+
+    function tableStatesListener(state, prevState) {
+        if (prevState.status < state.status) {
+            if (prevState.status === 2 && state.status === 3) {
+                const triggers = document.querySelectorAll('.add-offer');
+                triggers.forEach(el => el.addEventListener('click', event => {
+                    console.log(event.currentTarget.getAttribute("data-shop"));
+                    console.log(event.currentTarget.getAttribute("data-product"));
+
+                    document.getElementById("offer_shop").value = event.currentTarget.getAttribute("data-shop");
+                    document.getElementById("offer_product").value = event.currentTarget.getAttribute("data-product");
+
+                    document.getElementById("add_offer_modal").showModal();
+                }));
+            }
+        }
+    }
+
+    grid.config.store.subscribe(tableStatesListener);
+    grid.render(document.getElementById('destinationWrapper'));
+
 });
-
-const triggers = document.querySelectorAll('.add-offer');
-triggers.forEach(el => el.addEventListener('click', event => {
-/*    console.log(event.currentTarget.getAttribute("data-shop"));
-    console.log(event.currentTarget.getAttribute("data-product"));*/
-
-    document.getElementById("offer_shop").value = event.currentTarget.getAttribute("data-shop");
-    document.getElementById("offer_product").value = event.currentTarget.getAttribute("data-product");
-
-    document.getElementById("add_offer_modal").showModal();
-}));
