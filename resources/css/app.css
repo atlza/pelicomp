@@ -39,9 +39,29 @@ html{
     .box-login{
         @apply w-2/3 sm:w-1/2 md:w-1/3 2xl:w-1/4 text-center self-center border p-8 rounded
     }
+    .text-content{
+        @apply border p-8 rounded
+    }
 
-    table, .box-login{
+    table, .box-login, .text-content{
         /*background: rgba(247, 250, 252, 0.8);*/
         background: rgba(247, 250, 252);
+
+        td{
+            @apply text-center
+        }
+
+        a{
+            @apply text-cyan-600
+        }
     }
+
+    .gridjs-search{
+        @apply w-full;
+
+        input[type=search]{
+            @apply input input-bordered flex items-center gap-2 mb-4 w-full;
+        }
+    }
+
 }

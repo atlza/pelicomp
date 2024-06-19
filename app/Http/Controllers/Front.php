@@ -23,4 +23,9 @@ class Front extends Controller
             'properties' => $properties,
         ]);
     }
+
+    public function about()
+    {
+        return view('components/front/about');
+    }
 }

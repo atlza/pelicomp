@@ -21,7 +21,6 @@
                             @foreach( $properties as $aPropertyName => $aPropertyValues )
                                 <td>{{ $aPropertyName }}</td>
                             @endforeach
-                            <td>Offres</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,12 +34,12 @@
                                         <td>{{ $product->{ 'prop'.$loop->iteration } }}</td>
                                     @endif
                                 @endforeach
-                                <td>
+{{--                                <td>
                                     <a href="{{ route('connected-product-view', $product->id)  }}" title="voir les offres" class="text-secondary flex">
                                         <i class="mr-2" data-lucide="eye"></i>
                                         Détails et offres
                                     </a>
-                                </td>
+                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

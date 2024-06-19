@@ -62,7 +62,7 @@ class Authenticate extends Controller
         }
         // else... we send always a success message to avoid any "info extraction"
 
-        return back()->with('success', 'You have an email!');
+        return back()->with('message', 'You have an email!');
     }
 
 }

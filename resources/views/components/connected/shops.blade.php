@@ -19,7 +19,6 @@
                             <td>name</td>
                             <td>url</td>
                             <td>Ajouté par</td>
-                            <td></td>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,12 +28,12 @@
                                 <td>{{ $shop->name }}</td>
                                 <td>{{ $shop->url }}</td>
                                 <td>{{ $shop->user->fullname() }}</td>
-                                <td class="text-right">
+{{--                                <td class="text-right">
                                     <a href="" title="voir les offres" class="text-secondary flex">
                                         <i data-lucide="badge-euro" class="mr-2"></i>
                                         voir les offres
                                     </a>
-                                </td>
+                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

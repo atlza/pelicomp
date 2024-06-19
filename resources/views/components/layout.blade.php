@@ -18,10 +18,6 @@
         <header>
             <a class="home" href="{{ route('home') }}" title="">Péloches</a>
             <div class="flex">
-                <a class="flex text-neutral mr-8" href="/">
-                    <i data-lucide="badge-euro" class="mr-2"></i>
-                    Offres
-                </a>
                 @if (Auth::check())
                     <a class="flex text-neutral mr-8" href="{{ route('connected-shops') }}">
                         <i data-lucide="store" class="mr-2"></i>
@@ -31,19 +27,30 @@
                         <i data-lucide="aperture" class="mr-2"></i>
                         Marques
                     </a>
-                    <a class="flex text-neutral" href="{{ route('connected-products') }}">
+                    <a class="flex text-neutral mr-8" href="{{ route('connected-products') }}">
                         <i data-lucide="film" class="mr-2"></i>
                         Produits
                     </a>
                 @else
-                    <a class="btn btn-sm btn-outline btn-neutral" href="{{ route('signin') }}">
+                    <a class="btn btn-sm btn-outline btn-neutral mr-8" href="{{ route('signin') }}">
                         <i data-lucide="plus"></i>
                         Contribuer
                     </a>
                 @endif
+                <a class="flex text-neutral mr-8" href="/">
+                    <i data-lucide="badge-euro" class="mr-2"></i>
+                    Offres
+                </a>
+                <a class="flex text-neutral" href="{{ route('about') }}">
+                    <i data-lucide="message-circle-question" class="mr-2"></i>
+                    A propos
+                </a>
             </div>
         </header>
         <div id="app-content">
+
+            <x-parts.message />
+
             {{ $slot }}
         </div>
     </section>

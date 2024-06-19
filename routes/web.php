@@ -26,6 +26,7 @@ Route::get('/', function () {
 
 Route::get('/signin', [Front::class, 'signin'])->name('signin');
 Route::get('/', [Front::class, 'home'])->name('home');
+Route::get('/about', [Front::class, 'about'])->name('about');
 
 
 Route::controller(Authenticate::class)->group(function () {

@@ -17,7 +17,6 @@
                         <tr>
                             <th>#id</th>
                             <th>name</th>
-                            <th class="text-end"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -25,12 +24,12 @@
                             <tr>
                                 <td>{{ $brand->id }}</td>
                                 <td>{{ $brand->name }}</td>
-                                <td class="text-end">
+{{--                                <td class="text-end">
                                     <a href="" title="voir les offres" class="text-secondary flex">
                                         <i data-lucide="aperture" class="mr-2"></i>
                                         voir les produits
                                     </a>
-                                </td>
+                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>
