@@ -30,7 +30,7 @@
                             @endforeach
                             @foreach ($shops as $shop)
                                 <td class="w-3 text-center">
-                                    @if( Auth::check() && empty($offers[$product->id][$shop->id]) )
+                                    @if( auth()->user()->can('Manage offers') && empty($offers[$product->id][$shop->id]) )
                                         <a href="#" title="Ajouter une offre" class="add-offer text-secondary flex"
                                            id="offer_{{ $shop->id }}_{{ $product->id }}"
                                            data-shop="{{ $shop->id }}" data-product="{{ $product->id }}">
@@ -52,7 +52,7 @@
                     <div class="modal-box w-11/12 max-w-5xl ">
                         <h3 class="font-bold text-lg">Ajouter une offre</h3>
                         <p class="py-4 text-base-500">Collez simplement ici l'url de l'offre, si nous arrivons à la lire, elle sera ajoutée et mise à jour quotidiennement.</p>
-                        <form action="{{ route('connected-offer-add') }}" method="post">
+                        <form action="{{ route('manage-offer-add') }}" method="post">
                             @csrf
                             <input type="hidden" name="shop_id" value="" id="offer_shop">
                             <input type="hidden" name="product_id" value="" id="offer_product">

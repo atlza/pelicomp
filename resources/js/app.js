@@ -3,12 +3,12 @@ import './bootstrap';
 import { Grid } from "gridjs";
 import "gridjs/dist/theme/mermaid.css";
 
-import { createIcons, Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion
+import { createIcons, Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users
 } from 'lucide';
 
 createIcons({
     icons: {
-        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion
+        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users
     }
 });
 

@@ -32,18 +32,5 @@ class InitialSeeder extends Seeder
         Brand::create([ 'name' => 'Shanghai' ]);
         Brand::create([ 'name' => 'Silberra' ]);
         Brand::create([ 'name' => 'Washi' ]);
-
-        Type::create([ 'name' => 'Black & white' ]);
-        Type::create([ 'name' => 'Panchromatique' ]);
-        Type::create([ 'name' => 'Couleur' ]);
-        Type::create([ 'name' => 'Couleur ciné' ]);
-        Type::create([ 'name' => 'Panchromatique ciné' ]);
-        Type::create([ 'name' => 'Couleur reversible' ]);
-        Type::create([ 'name' => 'Orthopanchromatique' ]);
-        Type::create([ 'name' => 'Monochrome' ]);
-        Type::create([ 'name' => 'Couleur Lomo' ]);
-        Type::create([ 'name' => 'Superpanchromatique' ]);
-        Type::create([ 'name' => 'Hyperpanchromatique' ]);
-        Type::create([ 'name' => 'Radio fluographique' ]);
     }
 }

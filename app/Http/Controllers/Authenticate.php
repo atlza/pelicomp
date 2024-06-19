@@ -27,7 +27,8 @@ class Authenticate extends Controller
         Auth::login($user);
         Cache::forget($tokenCacheKey);
 
-        return redirect('/');
+        if ( $user->hasRole('inactive'))  return redirect('/waiting');
+        else   return redirect('/');
     }
 
 
@@ -47,22 +48,22 @@ class Authenticate extends Controller
                 ]
             );
 
+        if ($user && !$user->hasRole('banned')) {
 
-
-        if ($user) {
             $token = Str::orderedUuid();
-
             Cache::put("pwl.tkn.{$token}", $user->id, 10 * 60);
-
             $passwordlessUrl = route('signin-token', [
                 'token' => $token
             ]);
-
             $user->notify(new noPasswordNotification(url: $passwordlessUrl));
-        }
-        // else... we send always a success message to avoid any "info extraction"
 
-        return back()->with('message', 'You have an email!');
+            return back()->with('message', 'On vous a envoyé un email, cliquez sur le bouton qu\'il contient pour vous connecter.');
+        }
+        else
+        {
+            return back()->with('error', 'Désolé vous ne pouvez pas vous connecter.');
+        }
+
     }
 
 }

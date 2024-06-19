@@ -28,4 +28,9 @@ class Front extends Controller
     {
         return view('components/front/about');
     }
+
+    public function waiting()
+    {
+        return view('components/front/waiting');
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\User\Brands;
 use App\Http\Controllers\User\Offers;
 use App\Http\Controllers\User\Products;
 use App\Http\Controllers\User\shops;
+use App\Http\Controllers\User\Users;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,16 +37,23 @@ Route::controller(Authenticate::class)->group(function () {
     Route::post('/login', [Authenticate::class, 'authenticate'])->name('signin-authenticate');
 });
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/brands', [Brands::class, 'brands'])->name('connected-brands');
-    Route::post('/brands', [Brands::class, 'add'])->name('connected-brand-add');
+Route::group(['middleware' => ['role:inactive']], function () {
+    Route::get('/waiting', [Front::class, 'waiting'])->name('waiting');
+});
 
-    Route::get('/products', [Products::class, 'all'])->name('connected-products');
-    Route::get('/products/{id}', [Products::class, 'view'])->name('connected-product-view');
-    Route::post('/products', [Products::class, 'add'])->name('connected-products-add');
+Route::group(['middleware' => ['role:admin|contributor']], function () {
+    Route::get('/brands', [Brands::class, 'brands'])->name('manage-brands');
+    Route::post('/brands', [Brands::class, 'add'])->name('manage-brand-add');
 
-    Route::get('/shops', [shops::class, 'shops'])->name('connected-shops');
-    Route::post('/shops', [Shops::class, 'add'])->name('connected-shops-add');
+    Route::get('/products', [Products::class, 'all'])->name('manage-products');
+    Route::post('/products', [Products::class, 'add'])->name('manage-products-add');
 
-    Route::post('/offer', [Offers::class, 'add'])->name('connected-offer-add');
+    Route::post('/offer', [Offers::class, 'add'])->name('manage-offer-add');
+});
+
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/shops', [shops::class, 'shops'])->name('manage-shops');
+    Route::post('/shops', [Shops::class, 'add'])->name('manage-shops-add');
+
+    Route::get('/users', [Users::class, 'users'])->name('manage-users');
 });

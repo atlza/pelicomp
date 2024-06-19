@@ -6,34 +6,24 @@
                 <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
 
-                    <div class="justify-end flex my-8">
-                        <label for="my-drawer-4" class="justify-self-end drawer-button btn btn-secondary btn-outline btn-sm">
-                            <i class="mr-2" data-lucide="plus"></i>
-                            Ajouter une boutique</label>
-                    </div>
-
                     <table class="table">
                         <thead>
                         <tr>
                             <td>#id</td>
-                            <td>name</td>
-                            <td>url</td>
-                            <td>Ajouté par</td>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Rôle</td>
+                            <td>Date inscription</td>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($shops as $shop)
+                        @foreach ($users as $aUser)
                             <tr>
-                                <td>{{ $shop->id }}</td>
-                                <td>{{ $shop->name }}</td>
-                                <td>{{ $shop->url }}</td>
-                                <td>{{ $shop->user->fullname() }}</td>
-{{--                                <td class="text-right">
-                                    <a href="" title="voir les offres" class="text-secondary flex">
-                                        <i data-lucide="badge-euro" class="mr-2"></i>
-                                        voir les offres
-                                    </a>
-                                </td>--}}
+                                <td>{{ $aUser->id }}</td>
+                                <td>{{ $aUser->name }}</td>
+                                <td>{{ $aUser->email }}</td>
+                                <td>{{ $aUser->getRoleNames()->first() }}</td>
+                                <td>{{ $aUser->created_at->format('d/m/Y') }}</td>
                             </tr>
                         @endforeach
                         </tbody>

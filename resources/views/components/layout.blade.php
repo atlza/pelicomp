@@ -19,18 +19,40 @@
             <a class="home" href="{{ route('home') }}" title="">Péloches</a>
             <div class="flex">
                 @if (Auth::check())
-                    <a class="flex text-neutral mr-8" href="{{ route('connected-shops') }}">
-                        <i data-lucide="store" class="mr-2"></i>
-                        Boutiques
-                    </a>
-                    <a class="flex text-neutral mr-8" href="{{ route('connected-brands') }}">
+                    @can('Manage users')
+                        <a class="flex text-neutral mr-8" href="{{ route('manage-users') }}">
+                            <i data-lucide="users" class="mr-2"></i>
+                            Utilisateurs
+                        </a>
+                    @endcan
+
+                    @can('Manage shops')
+                        <a class="flex text-neutral mr-8" href="{{ route('manage-shops') }}">
+                            <i data-lucide="store" class="mr-2"></i>
+                            Boutiques
+                        </a>
+                    @endcan
+
+                    @can('Manage brands')
+                    <a class="flex text-neutral mr-8" href="{{ route('manage-brands') }}">
                         <i data-lucide="aperture" class="mr-2"></i>
                         Marques
                     </a>
-                    <a class="flex text-neutral mr-8" href="{{ route('connected-products') }}">
+                    @endcan
+
+                    @can('Manage products')
+                    <a class="flex text-neutral mr-8" href="{{ route('manage-products') }}">
                         <i data-lucide="film" class="mr-2"></i>
                         Produits
                     </a>
+                    @endcan
+
+                    @role('inactive')
+                        <a class="flex text-neutral mr-8" href="{{ route('waiting') }}">
+                            <i data-lucide="user-cog" class="mr-2"></i>
+                            En attente
+                        </a>
+                    @endrole
                 @else
                     <a class="btn btn-sm btn-outline btn-neutral mr-8" href="{{ route('signin') }}">
                         <i data-lucide="plus"></i>
