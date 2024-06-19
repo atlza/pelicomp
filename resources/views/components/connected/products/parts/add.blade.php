@@ -2,7 +2,7 @@
     <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
     <div class="menu p-4 w-80 min-h-full bg-base-200 text-base-content prose">
         <h2>Ajouter un produit</h2>
-        <form action="{{ route('connected-products-add') }}" method="post">
+        <form action="{{ route('manage-products-add') }}" method="post">
             @csrf
 
             <select class="select select-bordered w-full max-w-xs mb-3" name="brand_id">
