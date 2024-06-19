@@ -1,6 +1,6 @@
 <p align="center">
         <img 
-            src="" 
+            src="https://raw.githubusercontent.com/atlza/pelicomp/main/resources/imgs/logo_white.png" 
             width="400" 
             alt="Pelicomp Logo">
 </p>
@@ -38,7 +38,7 @@ You can contribute with pull-requests or detailled issues.
 
 ## Code of Conduct
 
-In order to ensure that pelicomp is welcoming to all, please review and abide by the [Code of Conduct]().
+In order to ensure that pelicomp is welcoming to all, please review and abide by the [Code of Conduct](https://github.com/atlza/pelicomp?tab=coc-ov-file).
 
 ## Security Vulnerabilities
 
