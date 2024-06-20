@@ -38,9 +38,9 @@ class noPasswordNotification extends Notification
     {
         return (new MailMessage)
                     ->from(config('pelicomp.email_from'))
-                    ->subject('The introduction to the notification.')
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', $this->url)
+                    ->subject('Connexion à Peloches.com')
+                    ->line('Pour vous connecter, cliquez simplement sur le lien ci-dessous.')
+                    ->action('Je me connecte', $this->url)
                     ->line('Thank you for using our application!');
     }
 
