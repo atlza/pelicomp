@@ -28,7 +28,7 @@ class Brands extends Controller
             $brand->user_id = Auth::user()->id;
             $brand->save();
 
-            return redirect()->route("connected-products")->with('message', trans('Marque correctement ajoutée'));
+            return redirect()->route("manage-products")->with('message', trans('Marque correctement ajoutée'));
         } catch (\Exception $e) {
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }

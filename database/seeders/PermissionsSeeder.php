@@ -22,11 +22,13 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
+        $superAdminRole = Role::create(['name' => 'super admin']);
         $adminRole = Role::create(['name' => 'admin']);
         $contribRole = Role::create(['name' => 'contributor']);
         $inactiveRole = Role::create(['name' => 'inactive']);
         $bannedRole = Role::create(['name' => 'banned']);
 
+        $permissionAdmins = Permission::create(['name' => 'Manage admins']);
         $permissionUsers = Permission::create(['name' => 'Manage users']);
         $permissionShops = Permission::create(['name' => 'Manage shops']);
         $permissionBrands = Permission::create(['name' => 'Manage brands']);
@@ -34,6 +36,7 @@ class PermissionsSeeder extends Seeder
         $permissionOffers = Permission::create(['name' => 'Manage offers']);
         $permissionLogin = Permission::create(['name' => 'User login']);
 
+        $superAdminRole->syncPermissions([$permissionAdmins, $permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $adminRole->syncPermissions([$permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $contribRole->syncPermissions([$permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $inactiveRole->syncPermissions([$permissionLogin]);
@@ -45,6 +48,6 @@ class PermissionsSeeder extends Seeder
             'email' => 'admin@atlza.com',
             'password' => Hash::make('786SjwxC9juKZkaCWgRkzKgoCKjnkCib'),
         ]);
-        $userAS->assignRole($adminRole);
+        $userAS->assignRole($superAdminRole);
     }
 }

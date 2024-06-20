@@ -30,10 +30,8 @@ class Shops extends Controller
             $shop->user_id = Auth::user()->id;
             $shop->save();
 
-            return redirect()->route("connected-shops")->with('message', trans('Boutique correctement ajoutée'));
+            return redirect()->route("manage-shops")->with('message', trans('Boutique correctement ajoutée'));
         } catch (\Exception $e) {
-
-            dd($e);
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }

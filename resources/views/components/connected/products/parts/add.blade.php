@@ -14,9 +14,9 @@
             <input type="text" name="name" placeholder="Nom du produit" class="input input-bordered w-full max-w-xs mb-3" />
 
             @foreach( $properties as $propertyName => $propertyAttributes )
-                <option disabled selected>{{ $propertyName }}</option>
                 @if( is_array($propertyAttributes) )
                     <select name="prop{{ $loop->iteration }}" class="select select-bordered w-full max-w-xs mb-3">
+                        <option disabled selected>{{ $propertyName }}</option>
                         @foreach( $propertyAttributes as $anAttribute )
                             <option value="{{ $anAttribute  }}">{{ $anAttribute }}</option>
                         @endforeach

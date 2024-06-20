@@ -51,9 +51,8 @@ class Products extends Controller
             $product->user_id = Auth::user()->id;
             $product->save();
 
-            return redirect()->route("connected-products")->with('message', trans('Produit correctement ajouté'));
+            return redirect()->route("manage-products")->with('message', trans('Produit correctement ajouté'));
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }

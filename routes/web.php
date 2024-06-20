@@ -21,10 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/signin', [Front::class, 'signin'])->name('signin');
 Route::get('/', [Front::class, 'home'])->name('home');
 Route::get('/about', [Front::class, 'about'])->name('about');
@@ -51,9 +47,10 @@ Route::group(['middleware' => ['role:admin|contributor']], function () {
     Route::post('/offer', [Offers::class, 'add'])->name('manage-offer-add');
 });
 
-Route::group(['middleware' => ['role:admin']], function () {
+Route::group(['middleware' => ['role:admin|super admin']], function () {
     Route::get('/shops', [shops::class, 'shops'])->name('manage-shops');
     Route::post('/shops', [Shops::class, 'add'])->name('manage-shops-add');
 
     Route::get('/users', [Users::class, 'users'])->name('manage-users');
+    Route::post('/users', [Users::class, 'edit'])->name('manage-users-edit');
 });
