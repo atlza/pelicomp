@@ -20,6 +20,12 @@ Some things you can do with Pelicomp:
 
 Please visit [Pelcohes.com](https://peloches.com) to see a working copy (and the initial implementation) of Pelicomp.
 
+## Todos (planned features)
+- [ ] Internationalisation
+- [ ] Make text content easier to modify with markdown
+- [ ] Change logo
+- [ ] Add public pages for brands and products 
+
 ## Pelicomp's technical stack
 
 Pelicomp uses free softwares to run :
@@ -46,4 +52,7 @@ If you discover a security vulnerability within Pelicomp, please send an e-mail 
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [AGPL V3.0](https://opensource.org/license/agpl-v3).
+Pelicomp is open-sourced software licensed under the [AGPL V3.0](https://opensource.org/license/agpl-v3).
+
+## Licences
+Pelicomp's logo by [simple Icons](https://simpleicons.org/?q=pelican).
