@@ -1,5 +1,4 @@
-<x-front.layout>
-    <x-slot name="frontContent">
+<x-layout pageTitle="Liste des produits" >
         <section  class="container mx-auto">
 
             <div class="drawer drawer-end">
@@ -51,5 +50,4 @@
             </div>
 
         </section>
-    </x-slot>
-</x-front.layout>
+</x-layout>

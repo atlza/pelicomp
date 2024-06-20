@@ -20,7 +20,7 @@ class Front extends Controller
             'products' => $products,
             'shops' => $shops,
             'offers' => $offers,
-            'properties' => $properties,
+            'properties' => $properties
         ]);
     }
 
