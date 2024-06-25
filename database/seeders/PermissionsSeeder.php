@@ -43,7 +43,7 @@ class PermissionsSeeder extends Seeder
         //banned users have no permissions
 
         //default user admin is created, please change default password before running seeder
-        $userAS = User::factory()->create([
+        $userAS = User::create([
             'name' => 'Admin',
             'email' => 'admin@atlza.com',
             'password' => Hash::make('786SjwxC9juKZkaCWgRkzKgoCKjnkCib'),
