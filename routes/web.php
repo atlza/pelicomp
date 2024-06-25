@@ -46,7 +46,7 @@ Route::group(['middleware' => ['role:admin|contributor']], function () {
 });
 
 Route::group(['middleware' => ['role:admin|super admin']], function () {
-    Route::get('/shops', [shops::class, 'shops'])->name('manage-shops');
+    Route::get('/shops', [Shops::class, 'shops'])->name('manage-shops');
     Route::post('/shops', [Shops::class, 'add'])->name('manage-shops-add');
 
     Route::get('/users', [Users::class, 'users'])->name('manage-users');
