@@ -6,7 +6,7 @@ use App\Http\Controllers\Front;
 use App\Http\Controllers\User\Brands;
 use App\Http\Controllers\User\Offers;
 use App\Http\Controllers\User\Products;
-use App\Http\Controllers\User\shops;
+use App\Http\Controllers\User\Shops;
 use App\Http\Controllers\User\Users;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +35,7 @@ Route::group(['middleware' => ['role:inactive']], function () {
     Route::get('/waiting', [Front::class, 'waiting'])->name('waiting');
 });
 
-Route::group(['middleware' => ['role:admin|contributor']], function () {
+Route::group(['middleware' => ['role:super admin|admin|contributor']], function () {
     Route::get('/brands', [Brands::class, 'brands'])->name('manage-brands');
     Route::post('/brands', [Brands::class, 'add'])->name('manage-brand-add');
 
