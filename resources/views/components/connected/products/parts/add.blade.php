@@ -24,7 +24,7 @@
                 @else
                     <input placeholder="{{ $propertyName }}"
                            type="{{ $propertyAttributes }}"
-                           name="{{ $propertyName }}"
+                           name="prop{{ $loop->iteration }}"
                            class="input input-bordered w-full max-w-xs mb-3"
                         {{ $propertyAttributes === "number" ? 'step="1"' : '' }} />
                 @endif
