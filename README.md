@@ -25,6 +25,7 @@ Please visit [Pelcohes.com](https://peloches.com) to see a working copy (and the
 - [ ] Make text content easier to modify with markdown
 - [ ] Change logo
 - [ ] Add public pages for brands and products 
+- [ ] Add option to receive alerts for registered users
 
 ## Pelicomp's technical stack
 
