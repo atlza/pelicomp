@@ -26,6 +26,8 @@ Please visit [Pelcohes.com](https://peloches.com) to see a working copy (and the
 - [ ] Change logo
 - [ ] Add public pages for brands and products 
 - [ ] Add option to receive alerts for registered users
+- [ ] Add option to fav products and see only faved products for registered users
+- [ ] Add columns with medium price and lower price in offers
 
 ## Pelicomp's technical stack
 
