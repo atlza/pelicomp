@@ -50,7 +50,8 @@ trait ParserTrait
                             }
                             else{
                                 $datasFromUrl['price'] = $data->offers->price;
-                                $datasFromUrl['url'] = $data->offers->url;
+                                if( !empty($offer->url) ) $datasFromUrl['url'] = $offer->url;
+                                elseif( !empty($data->offers->url) ) $datasFromUrl['url'] = $data->offers->url;
                             }
                             $datasFound = true;
                         }
