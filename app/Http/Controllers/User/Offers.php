@@ -38,8 +38,6 @@ class Offers extends Controller
 
             return redirect()->route("home")->with('message', trans('Offre correctement ajoutée, prix ajouté'));
         } catch (\Exception $e) {
-
-            dd($e);
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }
