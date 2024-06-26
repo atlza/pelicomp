@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\adminNewUserNotification;
 use App\Notifications\noPasswordNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,14 @@ class Authenticate extends Controller
                     'name' => $request->email
                 ]
             );
+
+        if ($user->wasRecentlyCreated) { // user just created in the database; it didn't exist before.
+            //new user, super admin is notified
+            $adminUsers = User::role(['super admin', 'admin'])->get();
+            if( !empty($adminUsers) ) foreach ( $adminUsers as $anAdmin) {
+                $anAdmin->notify(new adminNewUserNotification(email: $user->email));
+            }
+        }
 
         if ($user && !$user->hasRole('banned')) {
 
