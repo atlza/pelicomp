@@ -35,7 +35,11 @@
                                         <i class="h-4 mx-auto" data-lucide="plus"></i>
                                     </a>
                                 @elseif( !empty($offers[$product->id][$shop->id]) )
-                                    <a href="{{ $offers[$product->id][$shop->id]->url }}" target="_blank" title="Voir l'offre">{{ $offers[$product->id][$shop->id]->price }}€</a>
+                                    <a href="{{ $offers[$product->id][$shop->id]->url }}"
+                                       target="_blank"
+                                       title="Mis à jour le {{ date('d/m/Y', strtotime($offers[$product->id][$shop->id]->updated_at)) }}">
+                                        {{ $offers[$product->id][$shop->id]->price }}€
+                                    </a>
                                 @else
                                     <i class="h-4 mx-auto" data-lucide="minus"></i>
                                 @endif

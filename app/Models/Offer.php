@@ -9,6 +9,7 @@ class Offer extends Model
 {
     use HasFactory;
     protected $fillable = ['shop_id', 'url', 'product_id'];
+    protected $dates = ['created_on', 'updated_at'];
 
     public static function allByProductAndShop()
     {
