@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Shop;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class Front extends Controller
 {
     public function home()
     {
-        $products = Product::all();
+        //get products by brands name thens product name
+        $products = Product::select(['products.*', 'brands.name as brand_name'])
+            ->join('brands', 'products.brand_id', '=', 'brands.id')
+            ->orderBy('brands.name')
+            ->orderBy('products.name')
+            ->get();
+
+        //$products = Product::all()->sortBy('name');
         $shops = Shop::all();
         $offers = Offer::allByProductAndShop();
         $properties = config('pelicomp.properties');
