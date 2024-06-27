@@ -7,7 +7,7 @@ use voku\helper\HtmlDomParser;
 
 trait ParserTrait
 {
-    public function readFromUrl( $url )
+    public function readFromUrl( $url, $withDebug = false )
     {
         $response = Http::withUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 14.4; rv:124.0) Gecko/20100101 Firefox/124.0") //todo place var in const or static or else
             ->withHeaders([
@@ -23,7 +23,7 @@ trait ParserTrait
         $htmlContent = $response->body();
         $dom = HtmlDomParser::str_get_html($htmlContent);
 
-        $website = parse_url( $url, PHP_URL_HOST);
+        //$website = parse_url( $url, PHP_URL_HOST);
         $datasFound = false;
         $datasFromUrl = [];
 
@@ -34,8 +34,17 @@ trait ParserTrait
                 if( $anElement->hasAttribute('type') && $anElement->getAttribute('type') == 'application/ld+json' ){
                     $data = json_decode($anElement->text());
 
+                    if( $withDebug ) dump($data->{'@graph'});
+
                     if( is_array($data) ){ //cas retrocamera.be
                         $data = $data[0];
+                    }
+                    elseif( is_array($data->{'@graph'}) ){ //cas pellicule-photo.com
+                        foreach( $data->{'@graph'} as $aSetOfData ){
+                            if( !empty($aSetOfData->{'@type'}) && strtolower($aSetOfData->{'@type'}) == 'product' ){
+                                $data = $aSetOfData;
+                            }
+                        }
                     }
 
                     if( !empty($data) && !empty($data->{'@type'}) ){
@@ -62,6 +71,11 @@ trait ParserTrait
                             $datasFromUrl['url'] = $data->mainEntity->offers->url;
                             $datasFound = true;
                         }
+
+                        if( $withDebug ) dump($datasFound);
+                        if( $withDebug ) echo "\n datasFromUrl";
+                        if( $withDebug ) dump($datasFromUrl);
+
                     }
                 }
             }
