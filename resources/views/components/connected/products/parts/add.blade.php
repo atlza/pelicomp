@@ -5,17 +5,27 @@
         <form action="{{ route('manage-products-add') }}" method="post">
             @csrf
 
-            <select class="select select-bordered w-full max-w-xs mb-3" name="brand_id" required="required">
+            <input id="edit-product-id"
+                   type="hidden"
+                   name="id" />
+
+            <select id="edit-product-brand" class="select select-bordered w-full max-w-xs mb-3" name="brand_id" required="required">
                 <option disabled selected>Marque</option>
                 @foreach ($brands as $brand)
                     <option value="{{ $brand->id }}" >{{ $brand->name }}</option>
                 @endforeach
             </select>
-            <input type="text" name="name" placeholder="Nom du produit" class="input input-bordered w-full max-w-xs mb-3" required="required" />
+            <input id="edit-product-name"
+                   type="text"
+                   name="name"
+                   placeholder="Nom du produit"
+                   class="input input-bordered w-full max-w-xs mb-3"
+                   required="required" />
 
             @foreach( $properties as $propertyName => $propertyAttributes )
                 @if( is_array($propertyAttributes['values']) )
                     <select name="prop{{ $loop->iteration }}"
+                            id="edit-product-prop{{ $loop->iteration }}"
                             class="select select-bordered w-full max-w-xs mb-3"
                         {!! $propertyAttributes['mandatory'] === true ? 'required="required"' : '' !!} >
                         <option disabled selected>{{ $propertyName }}</option>
@@ -25,6 +35,7 @@
                     </select>
                 @else
                     <input placeholder="{{ $propertyName }}"
+                           id="edit-product-prop{{ $loop->iteration }}"
                            type="{{ $propertyAttributes['values'] }}"
                            name="prop{{ $loop->iteration }}"
                            class="input input-bordered w-full max-w-xs mb-3"

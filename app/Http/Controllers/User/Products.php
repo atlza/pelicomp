@@ -42,13 +42,26 @@ class Products extends Controller
     public function add(Request $request)
     {
         $request->validate([
+            'id' => 'nullable|integer|exists:products,id',
             'brand_id' => 'required|integer',
             'name' => 'required|string'
         ]);
 
         try {
-            $product = new Product($request->only(['brand_id', 'name', 'prop1', 'prop2', 'prop3', 'prop4', 'prop5']));
-            $product->user_id = Auth::user()->id;
+            if ($request->id) {
+                $product = Product::findorfail($request->id);
+
+                $product->name = $request->name;
+                $product->prop1 = $request->prop1;
+                $product->prop2 = $request->prop2;
+                $product->prop3 = $request->prop3;
+                $product->prop4 = $request->prop4;
+                $product->prop5 = $request->prop5;
+            }
+            else {
+                $product = new Product($request->only(['brand_id', 'name', 'prop1', 'prop2', 'prop3', 'prop4', 'prop5']));
+                $product->user_id = Auth::user()->id;
+            }
             $product->save();
 
             return redirect()->route("manage-products")->with('message', trans('Produit correctement ajouté'));

@@ -21,6 +21,7 @@ section{
 header{
     @apply py-4 flex justify-between;
 
+
     a.home{
         font-family: Forta;
         color: #041D54;
