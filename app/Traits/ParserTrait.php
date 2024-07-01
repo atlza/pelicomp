@@ -34,12 +34,11 @@ trait ParserTrait
                 if( $anElement->hasAttribute('type') && $anElement->getAttribute('type') == 'application/ld+json' ){
                     $data = json_decode($anElement->text());
 
-                    if( $withDebug ) dump($data->{'@graph'});
-
                     if( is_array($data) ){ //cas retrocamera.be
                         $data = $data[0];
                     }
-                    elseif( is_array($data->{'@graph'}) ){ //cas pellicule-photo.com
+                    elseif( !empty($data->{'@graph'}) && is_array($data->{'@graph'}) ){ //cas pellicule-photo.com
+                        if( $withDebug ) dump($data->{'@graph'});
                         foreach( $data->{'@graph'} as $aSetOfData ){
                             if( !empty($aSetOfData->{'@type'}) && strtolower($aSetOfData->{'@type'}) == 'product' ){
                                 $data = $aSetOfData;
