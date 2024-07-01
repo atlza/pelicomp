@@ -1,23 +1,24 @@
 <x-layout pageTitle="Liste des boutiques" >
+
+    <div class="justify-end flex my-8">
+        <label for="my-drawer-4" class="justify-self-end drawer-button btn btn-secondary btn-outline btn-sm">
+            <i class="mr-2" data-lucide="plus"></i>
+            Ajouter une boutique</label>
+    </div>
+
     <section  class="container mx-auto">
 
         <div class="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
-
-                <div class="justify-end flex my-8">
-                    <label for="my-drawer-4" class="justify-self-end drawer-button btn btn-secondary btn-outline btn-sm">
-                        <i class="mr-2" data-lucide="plus"></i>
-                        Ajouter une boutique</label>
-                </div>
-
-                <table class="table">
+                <div id="destinationWrapper"></div>
+                <table id="sourceTable" class="table">
                     <thead>
                     <tr>
-                        <td>#id</td>
-                        <td>name</td>
-                        <td>url</td>
-                        <td>Ajouté par</td>
+                        <th>#id</th>
+                        <th>name</th>
+                        <th>url</th>
+                        <th>Ajouté par</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,17 +28,10 @@
                             <td>{{ $shop->name }}</td>
                             <td>{{ $shop->url }}</td>
                             <td>{{ $shop->user->fullname() }}</td>
-{{--                                <td class="text-right">
-                                <a href="" title="voir les offres" class="text-secondary flex">
-                                    <i data-lucide="badge-euro" class="mr-2"></i>
-                                    voir les offres
-                                </a>
-                            </td>--}}
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-
             </div>
 
             <div class="drawer-side">

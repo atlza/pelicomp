@@ -15,12 +15,13 @@ import {
     Plus,
     Store,
     UserCog,
-    Users
+    Users,
+    Menu
 } from 'lucide';
 
 createIcons({
     icons: {
-        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users, Pencil
+        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users, Pencil, Menu
     }
 });
 
