@@ -67,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             element.value = property;
                         } else {
                             //element is a select
-                            element.selectedIndex = [...element.options].find(o => o.value === property).index;
+                            console.log(element.options);
+                            element.selectedIndex = [...element.options].find(o => o.value === property || {}).index;
                         }
                     }
                     document.getElementById("my-drawer-4").checked = true;
