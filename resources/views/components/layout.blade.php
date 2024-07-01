@@ -148,8 +148,8 @@
         </div>
     </section>
 
-    <footer class="text-zinc-600 text-center mt-16">
-
+    <footer>
+        Made with <i class="inline-block" data-lucide="clock"></i> and <i class="inline-block text-error text-xs" data-lucide="heart"></i> by <a href="https://www.atlza.com" target="_blanck" title="Guillaume Le Roy">AtlzA</a>, sponsored by <a href="https://work.withmu.com" target="_blanck" title="Freelance Développement Laravel">Mu</a>.
     </footer>
 
 </body>

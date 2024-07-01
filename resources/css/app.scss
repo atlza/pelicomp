@@ -15,7 +15,7 @@
     font-style: normal;
 }
 
-html{
+body{
     background: url(../imgs/peloches.min.jpg) center bottom no-repeat;
     background-size: cover;
     min-height: 100vh;
@@ -48,7 +48,7 @@ html{
         @apply border p-8 rounded
     }
 
-    table, .box-login, .text-content{
+    table, .box-login, .text-content, footer{
         /*background: rgba(247, 250, 252, 0.8);*/
         background: rgba(247, 250, 252);
 
@@ -67,6 +67,10 @@ html{
         input[type=search]{
             @apply input input-bordered flex items-center gap-2 mb-4 w-full;
         }
+    }
+
+    footer{
+        @apply text-zinc-400 text-center inline-block float-end p-2 text-xs mr-3 rounded mt-8
     }
 
 }

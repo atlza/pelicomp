@@ -38,9 +38,9 @@
             <h2>Liens importants</h2>
             <ul>
                 <li><a href="https://github.com/atlza/pelicomp">Code source du site</a></li>
-                <li><a href="https://discord.gg/m5JAWqUGmx">Discord "les argenteux"</a></li>
-                <li><a href="https://www.atlza.com/">Site photo (à l'argentique) de l'auteur</a></li>
-                <li><a href="https://work.withmu.com/">Site pro de l'auteur</a></li>
+                <li><a href="https://discord.gg/m5JAWqUGmx" rel="nofollow">Discord "les argenteux"</a></li>
+                <li><a href="https://www.atlza.com/" title="Guillaume Le Roy">Site de l'auteur</a></li>
+                <li><a href="https://work.withmu.com/" title="développement web Rennes">Financé et hébergé par le studio Mu</a></li>
             </ul>
         </div>
     </div>
