@@ -32,7 +32,7 @@
                                data-shop="{{ $shop->id }}" data-product="{{ $product->id }}">
                                 <i class="h-4 mx-auto" data-lucide="plus"></i>
                             </a>
-                        @elseif( !empty($offers[$product->id][$shop->id]) )
+                        @elseif( !empty($offers[$product->id][$shop->id]->price) )
                             <a href="{{ $offers[$product->id][$shop->id]->url }}"
                                target="_blank"
                                title="Mis à jour le {{ date('d/m/Y', strtotime($offers[$product->id][$shop->id]->updated_at)) }}">
