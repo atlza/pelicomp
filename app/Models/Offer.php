@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Offer extends Model
 {
     use HasFactory;
-    protected $fillable = ['shop_id', 'url', 'product_id'];
+    use SoftDeletes;
+
+    protected $fillable = ['shop_id', 'url', 'product_id', 'deleted_at', 'user_id'];
     protected $dates = ['created_on', 'updated_at'];
 
     public static function allByProductAndShop()
@@ -22,6 +25,16 @@ class Offer extends Model
             $offersSorted[$anOffer->product_id][$anOffer->shop_id] = $anOffer;
         }
         return $offersSorted;
+    }
+
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function shop(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Shop::class);
     }
 
 }

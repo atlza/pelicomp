@@ -18,12 +18,15 @@ import {
     Users,
     Menu,
     Clock,
+    RefreshCw,
+    Delete,
+    Link,
     Heart
 } from 'lucide';
 
 createIcons({
     icons: {
-        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users, Pencil, Menu, Clock, Heart
+        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users, Pencil, Menu, Clock, Heart, RefreshCw, Delete, Link
     }
 });
 
@@ -72,6 +75,15 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
                     document.getElementById("my-drawer-4").checked = true;
+                }));
+
+                //delete offers
+                const triggersOffers = document.querySelectorAll('.delete-offer');
+                triggersOffers.forEach(el => el.addEventListener('click', event => {
+                    let offerId = event.currentTarget.getAttribute("data-id");
+
+                    document.getElementById("delete-offer-id").value = offerId;
+                    document.getElementById("modal-delete-offer").showModal()
                 }));
 
             }

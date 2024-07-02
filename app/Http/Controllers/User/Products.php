@@ -24,15 +24,14 @@ class Products extends Controller
         ]);
     }
 
-    public function view( $productId )
+    public function edit( $productId )
     {
         $brands = Brand::all();
         $properties = config('pelicomp.properties');
 
-        $product = new Product($productId);
-        $product->firstorfail();
+        $product = Product::find($productId);
 
-        return view('components/connected/products/view', [
+        return view('components/connected/products/edit', [
             'product' => $product,
             'brands' => $brands,
             'properties' => $properties,
@@ -64,7 +63,7 @@ class Products extends Controller
             }
             $product->save();
 
-            return redirect()->route("manage-products")->with('message', trans('Produit correctement ajouté'));
+            return redirect()->back()->with('message', trans('Produit correctement ajouté'));
         } catch (\Exception $e) {
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }

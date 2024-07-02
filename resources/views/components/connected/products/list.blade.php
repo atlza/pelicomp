@@ -38,9 +38,9 @@
                             @endif
                         @endforeach
                         @if( in_array(auth()->user()->getRoleNames()->first(), ['admin', 'super admin']) )
-                        <td>
+                        <td class="flex justify-end">
                             <a href="#" title="Modifier le produit"
-                                   class="edit-product text-secondary flex justify-end"
+                                   class="edit-product text-secondary inline-block"
                                    data-id="{{ $product->id }}"
                                    data-name="{{ $product->name }}"
                                    data-brand-id="{{ $product->brand_id }}"
@@ -50,7 +50,12 @@
                                    data-prop4="{{ $product->prop4 }}"
                                    data-prop5="{{ $product->prop5 }}"
                                >
-                                <i class="mr-2" data-lucide="pencil"></i>
+                                <i class="mr-8" data-lucide="pencil"></i>
+                            </a>
+                            <a href="{{ route('manage-products-edit', $product->id)  }}" title="Modifier le produit"
+                                   class="text-primary inline-block"
+                               >
+                                <i class="" data-lucide="eye"></i>
                             </a>
                         </td>
                         @endif

@@ -40,9 +40,13 @@ Route::group(['middleware' => ['role:super admin|admin|contributor']], function 
     Route::post('/brands', [Brands::class, 'add'])->name('manage-brand-add');
 
     Route::get('/products', [Products::class, 'all'])->name('manage-products');
+    Route::get('/products/edit/{id}', [Products::class, 'edit'])->name('manage-products-edit');
     Route::post('/products', [Products::class, 'add'])->name('manage-products-add');
 
     Route::post('/offer', [Offers::class, 'add'])->name('manage-offer-add');
+    Route::post('/offer/add-multiple', [Offers::class, 'addMultiple'])->name('manage-offer-add-multiple');
+    Route::post('/offer/delete', [Offers::class, 'delete'])->name('manage-offer-delete');
+    Route::get('/offer/update/{id}', [Offers::class, 'update'])->name('manage-offer-update');
 });
 
 Route::group(['middleware' => ['role:admin|super admin']], function () {
