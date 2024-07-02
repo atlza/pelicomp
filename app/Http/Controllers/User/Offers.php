@@ -30,7 +30,7 @@ class Offers extends Controller
             $offer->user_id = Auth::user()->id;
             $offer->save();
 
-            if( !$offerDatas = $this->readFromUrl( $offer->url, true ) ) throw new \Exception('Unable to read data from page');
+            if( !$offerDatas = $this->readFromUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();
