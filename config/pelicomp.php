@@ -25,7 +25,7 @@ return [
             'default' => 1
         ],
         'chimie' => [
-            'values' => ['E6', 'C41', 'E6 et C41', 'n&b'],
+            'values' => ['E6', 'C41', 'E6 et C41', 'n&b', 'ECN-2'],
             'mandatory' => false,
         ]
     ],
