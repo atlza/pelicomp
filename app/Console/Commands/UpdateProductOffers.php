@@ -30,10 +30,12 @@ class UpdateProductOffers extends Command
      */
     public function handle()
     {
-        $offersToUpdate = Offer::whereDate('updated_at', Carbon::today())
+        $offersToUpdate = Offer::whereDate('updated_at', '<=', Carbon::today())
             ->orderBy('updated_at', 'asc')
             ->limit(50)
             ->get();
+
+        dump($offersToUpdate);
 
         if( !empty($offersToUpdate) ) foreach ( $offersToUpdate as $anOffer ) {
             if( $offerDatas = $this->readFromUrl( $anOffer->url, true ) ) {
