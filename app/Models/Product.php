@@ -5,11 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
     protected $fillable = ['brand_id', 'name', 'iso', 'prop1', 'prop2', 'prop3', 'prop4', 'prop5'];
+
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['name', 'prop1', 'prop2', 'prop3'])
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
 
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

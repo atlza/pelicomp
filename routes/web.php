@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [Front::class, 'home'])->name('home');
 Route::get('/about', [Front::class, 'about'])->name('about');
+Route::get('/product/{slug}', [Front::class, 'product'])->name('front-product');
 
 
 Route::controller(Authenticate::class)->group(function () {

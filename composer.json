@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "spatie/laravel-permission": "^6.7",
+        "spatie/laravel-sluggable": "^3.6",
         "voku/simple_html_dom": "^4.8"
     },
     "require-dev": {

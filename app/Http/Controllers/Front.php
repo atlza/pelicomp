@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Shop;
@@ -29,6 +30,18 @@ class Front extends Controller
             'shops' => $shops,
             'offers' => $offers,
             'properties' => $properties
+        ]);
+    }
+
+    public function product(Request $request)
+    {
+        $brands = Brand::all();
+        $properties = config('pelicomp.properties');
+        $product = Product::findBySlug($request->slug);
+        return view('components/front/product', [
+            'product' => $product,
+            'brands' => $brands,
+            'properties' => $properties,
         ]);
     }
 

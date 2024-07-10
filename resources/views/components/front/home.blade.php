@@ -18,7 +18,11 @@
         @foreach ($products as $product)
             <tr>
                 <td>{{ $product->brand->name }}</td>
-                <td>{{ $product->name }}</td>
+                <td>
+                    <a href="{{ route('front-product', $product->slug) }}">
+                        <i data-lucid="eye" class="mr-2"></i>
+                        {{ $product->name }}</a>
+                </td>
                 @foreach( $properties as $aPropertyName => $aPropertyValues )
                     @if( !empty($aPropertyValues) )
                         <td>{{ $product->{ 'prop'.$loop->iteration } }}</td>
