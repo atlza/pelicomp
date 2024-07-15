@@ -22,32 +22,25 @@ class PermissionsSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        $superAdminRole = Role::create(['name' => 'super admin']);
-        $adminRole = Role::create(['name' => 'admin']);
-        $contribRole = Role::create(['name' => 'contributor']);
-        $inactiveRole = Role::create(['name' => 'inactive']);
-        $bannedRole = Role::create(['name' => 'banned']);
+        $superAdminRole = Role::findOrCreate(['name' => 'super admin']);
+        $adminRole = Role::findOrCreate(['name' => 'admin']);
+        $contribRole = Role::findOrCreate(['name' => 'contributor']);
+        $inactiveRole = Role::findOrCreate(['name' => 'inactive']);
+        $bannedRole = Role::findOrCreate(['name' => 'banned']);
 
-        $permissionAdmins = Permission::create(['name' => 'Manage admins']);
-        $permissionUsers = Permission::create(['name' => 'Manage users']);
-        $permissionShops = Permission::create(['name' => 'Manage shops']);
-        $permissionBrands = Permission::create(['name' => 'Manage brands']);
-        $permissionProducts = Permission::create(['name' => 'Manage products']);
-        $permissionOffers = Permission::create(['name' => 'Manage offers']);
-        $permissionLogin = Permission::create(['name' => 'User login']);
+        $permissionAdmins = Permission::findOrCreate(['name' => 'Manage admins']);
+        $permissionUsers = Permission::findOrCreate(['name' => 'Manage users']);
+        $permissionShops = Permission::findOrCreate(['name' => 'Manage shops']);
+        $permissionBrands = Permission::findOrCreate(['name' => 'Manage brands']);
+        $permissionProducts = Permission::findOrCreate(['name' => 'Manage products']);
+        $permissionOffers = Permission::findOrCreate(['name' => 'Manage offers']);
+        $permissionLogin = Permission::findOrCreate(['name' => 'User login']);
+        $permissionLogs = Permission::findOrCreate(['name' => 'See logs']);
 
-        $superAdminRole->syncPermissions([$permissionAdmins, $permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
+        $superAdminRole->syncPermissions([$permissionLogs, $permissionAdmins, $permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $adminRole->syncPermissions([$permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $contribRole->syncPermissions([$permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $inactiveRole->syncPermissions([$permissionLogin]);
         //banned users have no permissions
-
-        //default user admin is created, please change default password before running seeder
-        $userAS = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@atlza.com',
-            'password' => Hash::make('786SjwxC9juKZkaCWgRkzKgoCKjnkCib'),
-        ]);
-        $userAS->assignRole($superAdminRole);
     }
 }

@@ -4,8 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use App\Models\Type;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class InitialSeeder extends Seeder
 {
@@ -32,5 +36,16 @@ class InitialSeeder extends Seeder
         Brand::create([ 'name' => 'Shanghai' ]);
         Brand::create([ 'name' => 'Silberra' ]);
         Brand::create([ 'name' => 'Washi' ]);
+
+
+        //default user admin is created, please change default password before running seeder
+        $userAS = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@atlza.com',
+            'password' => Hash::make('786SjwxC9juKZkaCWgRkzKgoCKjnkCib'),
+        ]);
+
+        $superAdminRole = Role::findByName('super admin');
+        $userAS->assignRole($superAdminRole);
     }
 }

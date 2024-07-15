@@ -98,20 +98,20 @@
                         </li>
                     @endcan
 
-                    @can('Manage shops')
-                        <li>
-                            <a class="flex text-neutral mr-8" href="{{ route('manage-shops') }}">
-                                <i data-lucide="store" class="mr-2"></i>
-                                Boutiques
-                            </a>
-                        </li>
-                    @endcan
-
                     @can('Manage brands')
                         <li>
                             <a class="flex text-neutral mr-8" href="{{ route('manage-brands') }}">
                                 <i data-lucide="aperture" class="mr-2"></i>
                                 Marques
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('Manage shops')
+                        <li>
+                            <a class="flex text-neutral mr-8" href="{{ route('manage-shops') }}">
+                                <i data-lucide="store" class="mr-2"></i>
+                                Boutiques
                             </a>
                         </li>
                     @endcan
