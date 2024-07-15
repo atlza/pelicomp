@@ -4,11 +4,15 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Log;
+use App\Traits\LogTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Brands extends Controller
 {
+    use Logtrait;
+
     public function brands()
     {
         $brands = Brand::all();
@@ -27,6 +31,8 @@ class Brands extends Controller
             $brand = new Brand($request->only(['name']));
             $brand->user_id = Auth::user()->id;
             $brand->save();
+
+            $this->log('create', 'brand', $brand->id);
 
             return redirect()->route("manage-products")->with('message', trans('Marque correctement ajoutée'));
         } catch (\Exception $e) {

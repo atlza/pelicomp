@@ -65,4 +65,8 @@ class User extends Authenticatable
         return $this->hasMany(Shop::class);
     }
 
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'logable');
+    }
 }

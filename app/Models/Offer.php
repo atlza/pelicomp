@@ -37,4 +37,9 @@ class Offer extends Model
         return $this->belongsTo(Shop::class);
     }
 
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'logable');
+    }
+
 }

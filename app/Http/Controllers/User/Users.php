@@ -5,12 +5,15 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Shop;
 use App\Models\User;
+use App\Traits\LogTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class Users extends Controller
 {
+    use Logtrait;
+
     public function users()
     {
         $users = User::all();
@@ -40,6 +43,8 @@ class Users extends Controller
             }
 
             $editedUser->syncRoles($request->user_role);
+
+            $this->log('update', 'user', $editedUser->id);
             return redirect()->route("manage-users")->with('message', trans('Droits ajustés'));
         } catch (\Exception $e) {
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));

@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(Offer::class);
     }
+
+    public function logs()
+    {
+        return $this->morphMany('App\Models\Log', 'logable');
+    }
 }

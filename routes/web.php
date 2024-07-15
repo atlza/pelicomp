@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Logs;
 use App\Http\Controllers\Authenticate;
 use App\Http\Controllers\Front;
 
@@ -56,4 +57,8 @@ Route::group(['middleware' => ['role:admin|super admin']], function () {
 
     Route::get('/users', [Users::class, 'users'])->name('manage-users');
     Route::post('/users', [Users::class, 'edit'])->name('manage-users-edit');
+});
+
+Route::group(['middleware' => ['role:super admin']], function () {
+    Route::get('/logs', [Logs::class, 'all'])->name('see-logs');
 });

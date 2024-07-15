@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Traits\LogTrait;
 use App\Traits\ParserTrait;
 use App\Models\Offer;
 use Illuminate\Console\Command;
@@ -9,6 +10,7 @@ use Illuminate\Support\Carbon;
 
 class UpdateProductOffers extends Command
 {
+    use Logtrait;
     use ParserTrait;
 
     /**
@@ -41,6 +43,8 @@ class UpdateProductOffers extends Command
             if( $offerDatas = $this->readFromUrl( $anOffer->url, true ) ) {
                 $anOffer->price = $offerDatas['price'];
                 $anOffer->save();
+
+                $this->log('update', 'offer', $anOffer->id);
             }
         }
 

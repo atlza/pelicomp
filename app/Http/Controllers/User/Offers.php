@@ -5,12 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use App\Models\Shop;
+use App\Traits\LogTrait;
 use App\Traits\ParserTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Offers extends Controller
 {
+    use Logtrait;
     use ParserTrait;
 
     public function add(Request $request)
@@ -35,6 +37,8 @@ class Offers extends Controller
                 $offer->price = $offerDatas['price'];
                 $offer->save();
             }
+
+            $this->log('create', 'offer', $offer->id);
 
             return redirect()->route("home")->with('message', trans('Offre correctement ajoutée, prix ajouté'));
         } catch (\Exception $e) {
@@ -71,6 +75,8 @@ class Offers extends Controller
                         $offer->price = $offerDatas['price'];
                         $offer->save();
 
+                        $this->log('create', 'offer', $offer->id);
+
                         $offers_saved++;
                     }
                 }
@@ -93,6 +99,8 @@ class Offers extends Controller
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();
+
+                $this->log('update', 'offer', $offer->id);
             }
 
             return redirect()->back()->with('message', trans('Offre correctement enregistrée, prix ajouté'));
@@ -109,6 +117,7 @@ class Offers extends Controller
             ]);
 
             Offer::destroy($request->id);
+            $this->log('delete', 'offer', $request->id);
 
             return redirect()->back()->with('message', trans('Offre supprimée'));
         } catch (\Exception $e) {

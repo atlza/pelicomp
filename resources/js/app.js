@@ -21,12 +21,13 @@ import {
     RefreshCw,
     Delete,
     Link,
-    Heart
+    Heart,
+    FileClock
 } from 'lucide';
 
 createIcons({
     icons: {
-        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users, Pencil, Menu, Clock, Heart, RefreshCw, Delete, Link
+        Plus, Aperture, Film, Store, BadgeEuro, Eye, Minus, MessageCircleQuestion, UserCog, Users, Pencil, Menu, Clock, Heart, RefreshCw, Delete, Link, FileClock
     }
 });
 

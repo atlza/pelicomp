@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Type;
+use App\Traits\LogTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Products extends Controller
 {
+    use Logtrait;
+
     public function all()
     {
         $products = Product::all();
@@ -62,6 +65,8 @@ class Products extends Controller
                 $product->user_id = Auth::user()->id;
             }
             $product->save();
+
+            $this->log('create', 'product', $product->id);
 
             return redirect()->back()->with('message', trans('Produit correctement ajouté'));
         } catch (\Exception $e) {
