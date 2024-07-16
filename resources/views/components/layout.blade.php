@@ -17,6 +17,13 @@
         </label>
         <div class="hidden md:flex">
             @if (Auth::check())
+                @can('See logs')
+                    <a class="flex text-neutral mr-8" href="{{ route('see-logs') }}">
+                        <i data-lucide="file-clock" class="mr-2"></i>
+                        Logs
+                    </a>
+                @endcan
+
                 @can('Manage users')
                     <a class="flex text-neutral mr-8" href="{{ route('manage-users') }}">
                         <i data-lucide="users" class="mr-2"></i>
@@ -80,13 +87,14 @@
             <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
             <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                 @if (Auth::check())
+
                     @can('See logs')
-                        <li>
-                            <a class="flex text-neutral mr-8" href="{{ route('see-logs') }}">
-                                <i data-lucide="file-clock" class="mr-2"></i>
-                                Logs
-                            </a>
-                        </li>
+                    <li>
+                        <a class="flex text-neutral mr-8" href="{{ route('see-logs') }}">
+                            <i data-lucide="file-clock" class="mr-2"></i>
+                            Logs
+                        </a>
+                    </li>
                     @endcan
 
                     @can('Manage users')
@@ -107,7 +115,7 @@
                         </li>
                     @endcan
 
-                    @can('Manage shops')
+                    @can('Manage products')
                         <li>
                             <a class="flex text-neutral mr-8" href="{{ route('manage-shops') }}">
                                 <i data-lucide="store" class="mr-2"></i>
