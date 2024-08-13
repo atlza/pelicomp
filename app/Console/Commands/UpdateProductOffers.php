@@ -40,7 +40,7 @@ class UpdateProductOffers extends Command
         dump($offersToUpdate);
 
         if( !empty($offersToUpdate) ) foreach ( $offersToUpdate as $anOffer ) {
-            if( $offerDatas = $this->readFromUrl( $anOffer->url, true ) ) {
+            if( $offerDatas = $this->readProductUrl( $anOffer->url, true ) ) {
                 $anOffer->price = $offerDatas['price'];
                 $anOffer->save();
 

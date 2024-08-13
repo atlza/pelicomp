@@ -60,6 +60,15 @@ body{
         a{
             @apply text-cyan-600
         }
+
+        &.text-right td{
+            text-align:  right;
+
+            &.text-left{
+                text-align:  left;
+            }
+        }
+
     }
 
     .gridjs-search{
@@ -75,3 +84,5 @@ body{
     }
 
 }
+
+
