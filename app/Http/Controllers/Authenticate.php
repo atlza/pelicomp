@@ -35,6 +35,14 @@ class Authenticate extends Controller
 
     public function authenticate( Request $request)
     {
+        if($request->filled('login')) {
+            //honeypot le champ fullname doit être vide.
+            //en théorie on aurait dû pouvoir le tester avec un prohibited dans le validate (voir plus bas) mais non fonctionnel
+            return back()->withErrors([
+                'login' => 'Sorry you do not seems to be a real person to us',
+            ])->onlyInput('login');
+        }
+
         $request->validate([
             'email' => 'required|email'
         ]);

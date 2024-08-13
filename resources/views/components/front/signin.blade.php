@@ -12,6 +12,7 @@
                         <span class="label-text">Votre adresse email ?</span>
                     </div>
                     <input type="text" name="email" placeholder="moi@domaine.fr" class="input input-bordered w-full" />
+                    <input type="text" name="login" placeholder="Leave empty if your are humain" class="invisible input input-bordered w-full" />
                 </label>
                 <p class="text-base-300 mb-6">
                     Nous n'utilisons pas de mot de passe, entrez votre email et vous recevrez un lien vous permettant de vous connecter.<br />
