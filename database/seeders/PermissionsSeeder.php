@@ -38,7 +38,7 @@ class PermissionsSeeder extends Seeder
         $permissionLogs = Permission::findOrCreate(['name' => 'See logs']);
 
         $superAdminRole->syncPermissions([$permissionLogs, $permissionAdmins, $permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
-        $adminRole->syncPermissions([$permissionUsers, $permissionShops, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
+        $adminRole->syncPermissions([$permissionUsers, $permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $contribRole->syncPermissions([$permissionBrands, $permissionProducts, $permissionOffers, $permissionLogin]);
         $inactiveRole->syncPermissions([$permissionLogin]);
         //banned users have no permissions

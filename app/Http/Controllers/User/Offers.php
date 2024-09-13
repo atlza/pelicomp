@@ -32,7 +32,7 @@ class Offers extends Controller
             $offer->user_id = Auth::user()->id;
             $offer->save();
 
-            if( !$offerDatas = $this->readFromUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
+            if( !$offerDatas = $this->readProductUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();
@@ -71,7 +71,7 @@ class Offers extends Controller
                         'deleted_at' => null
                     ]);
 
-                    if( $offerDatas = $this->readFromUrl( $offer->url, false ) ) {
+                    if( $offerDatas = $this->readProductUrl( $offer->url, false ) ) {
                         $offer->price = $offerDatas['price'];
                         $offer->save();
 
@@ -95,7 +95,7 @@ class Offers extends Controller
 
             $offer = Offer::find($offerId);
 
-            if( !$offerDatas = $this->readFromUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
+            if( !$offerDatas = $this->readProductUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();

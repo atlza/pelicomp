@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Product;
 use App\Models\Shop;
 use App\Traits\LogTrait;
+use App\Traits\ParserTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Shops extends Controller
 {
-    use Logtrait;
+    use Logtrait, ParserTrait;
 
     public function shops()
     {
@@ -37,6 +40,37 @@ class Shops extends Controller
 
             return redirect()->route("manage-shops")->with('message', trans('Boutique correctement ajoutée'));
         } catch (\Exception $e) {
+            return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
+        }
+    }
+
+    public function addProducts(Request $request)
+    {
+        $properties = config('pelicomp.properties');
+        $brands = Brand::all();
+
+        $request->validate([
+            'shop_id' => 'required|integer|exists:shops,id',
+            'url' => 'required|url:http,https',
+        ]);
+
+        try {
+            $newProducts = $this->readProductsListUrl( $request->url, false );
+            $products = Product::all();
+
+            $shop = Shop::find($request->shop_id);
+
+            return view('components/connected/shops/add-products', [
+                'shop' => $shop,
+                'products' => $products,
+                'brands' => $brands,
+                'newProducts' => $newProducts,
+                'properties' => $properties
+            ]);
+
+            //return redirect()->route("manage-shops")->with('message', trans('Boutique correctement ajoutée'));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }

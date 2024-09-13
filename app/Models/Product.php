@@ -11,7 +11,7 @@ use Spatie\Sluggable\SlugOptions;
 class Product extends Model
 {
     use HasFactory, HasSlug;
-    protected $fillable = ['brand_id', 'name', 'iso', 'prop1', 'prop2', 'prop3', 'prop4', 'prop5'];
+    protected $fillable = ['brand_id', 'name', 'iso', 'prop1', 'prop2', 'prop3', 'prop4', 'prop5', 'gtin'];
 
     public function getSlugOptions() : SlugOptions
     {

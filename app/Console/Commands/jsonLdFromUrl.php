@@ -39,9 +39,7 @@ class jsonLdFromUrl extends Command
      */
     public function handle()
     {
-        foreach( self::$testUrls as $url ){
-            $this->readFromUrl($url, true);
-        }
+        $this->readProductUrl(self::$testUrls, true);
     }
 
 }
