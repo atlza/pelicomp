@@ -44,6 +44,8 @@ Route::group(['middleware' => ['role:super admin|admin|contributor']], function 
     Route::get('/products', [Products::class, 'all'])->name('manage-products');
     Route::get('/products/edit/{id}', [Products::class, 'edit'])->name('manage-products-edit');
     Route::post('/products', [Products::class, 'add'])->name('manage-products-add');
+    Route::post('/products/add', [Products::class, 'addAjax'])->name('manage-products-add-ajax');
+    Route::post('/products/add/offers', [Products::class, 'saveOffers'])->name('manage-products-add-offers');
 
     Route::post('/offer', [Offers::class, 'add'])->name('manage-offer-add');
     Route::post('/offer/add-multiple', [Offers::class, 'addMultiple'])->name('manage-offer-add-multiple');

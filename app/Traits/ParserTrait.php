@@ -69,12 +69,12 @@ trait ParserTrait
 
         $items = [];
         $elementsOrFalse = $dom->findMultiOrFalse('script');
+
         if( !empty($elementsOrFalse) ) {
             foreach ($elementsOrFalse as $anElement) {
 
                 if ($anElement->hasAttribute('type') && $anElement->getAttribute('type') == 'application/ld+json') {
                     $data = json_decode($anElement->text());
-
                     if (!empty($data) && !empty($data->{'@type'}) && strtolower($data->{'@type'}) == 'itemlist') {
 
                         if (!empty($data->itemListElement)) foreach ($data->itemListElement as $item) {

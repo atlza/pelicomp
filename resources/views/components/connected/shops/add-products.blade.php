@@ -1,6 +1,6 @@
 <x-layout pageTitle="Boutique ajout de produits" >
 
-    <form method="post" action="">
+    <form method="post" action="{{ route('manage-products-add-offers') }}">
         @csrf
         <input type="hidden" name="shop_id" value="{{ $shop->id }}" />
 
@@ -14,9 +14,11 @@
                     </p>
                 </div>
             </div>
+            @if( !empty($newProducts) )
             <div class="basis-1/4 text-right relative">
-                <button type="submit" class="btn btn-success absolute bottom-0 right-0">Save products & offers</button>
+                <button type="submit" class="btn btn-success text-white absolute bottom-0 right-0">Save offers</button>
             </div>
+            @endif
         </div>
 
         <div id="destinationWrapper"></div>
@@ -30,33 +32,41 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach ($newProducts as $newProduct)
+            @if( !empty($newProducts) )
+                @foreach ($newProducts as $newProduct)
+                    <tr>
+                        <td class="text-left">
+                            <a href="{{ $newProduct['url'] }}" target="_blank">{{ $newProduct['name'] }} </a>
+                            <input type="hidden" name="product_offer_price[{{ $loop->index }}]" value="{{ $newProduct['price'] }}" />
+                            <input type="hidden" name="product_offer_url[{{ $loop->index }}]" value="{{ $newProduct['url'] }}" />
+                        </td>
+                        <td class="">
+                            <select name="product_id[{{ $loop->index }}]" id="add-product-from-shop-product-exists-{{ $loop->index }}" class="select select-bordered w-64">
+                                <option value="">None / do not add</option>
+                                @foreach( $products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->brand->name }} {{ $product->name  }} {{ $product->prop1  }}mm {{ $product->prop2  }}Iso {{ $product->prop3  }} - x{{ $product->prop4  }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" class="link-product btn btn-outline btn-neutral btn-sm mt-1"
+                                    data-product-name="{{ $newProduct['name'] }}"
+                                    data-product-url="{{ $newProduct['url'] }}"
+                                    data-product-gtin="{{ (!empty($newProduct['gtin'])) ? $newProduct['gtin'] : '' }}"
+                                    data-loop-index="{{ $loop->index }}"
+                            >
+                                <i data-lucide="plus" class="mr-2"></i>Add a product
+                            </button>
+                        </td>
+                        <td class="">{{ (!empty($newProduct['gtin'])) ? $newProduct['gtin'] : '' }}</td>
+                        <td class="">{{ $newProduct['price'] }}</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <td class="text-left">
-                        <a href="{{ $newProduct['url'] }}" target="_blank">{{ $newProduct['name'] }} </a>
-                        <input type="hidden" name="product_id[{{ $loop->index }}]" value="" />
-                        <input type="hidden" name="product_offer_price[{{ $loop->index }}]" value="{{ $newProduct['price'] }}" />
-                        <input type="hidden" name="product_offer_url[{{ $loop->index }}]" value="{{ $newProduct['url'] }}" />
+                    <td class="text-center" colspan="4">
+                        Impossible de lire la page et de trouver des produits
                     </td>
-                    <td class="">
-                        <select id="add-product-from-shop-product-exists" class="select select-bordered w-64">
-                            <option>None</option>
-                            @foreach( $products as $product)
-                                <option value="{{ $product->id }}">{{ $product->brand->name }} {{ $product->name  }} {{ $product->prop1  }}mm {{ $product->prop2  }}Iso {{ $product->prop3  }} - x{{ $product->prop4  }}</option>
-                            @endforeach
-                        </select>
-                        <button type="button" class="link-product btn btn-outline btn-neutral btn-sm mt-1"
-                                data-product-name="{{ $newProduct['name'] }}"
-                                data-product-gtin="{{ $newProduct['gtin'] }}"
-                                data-loop-index="{{ $loop->index }}"
-                        >
-                            <i data-lucide="plus" class="mr-2"></i>Add a product
-                        </button>
-                    </td>
-                    <td class="">{{ $newProduct['gtin'] }}</td>
-                    <td class="">{{ $newProduct['price'] }}</td>
                 </tr>
-            @endforeach
+            @endif
             </tbody>
         </table>
     </form>
@@ -67,16 +77,16 @@
             <h3 id="add-product-modal-title" class="font-bold text-lg"></h3>
             <p class="py-4 text-base-500">
                 Si le produit n'existe pas dans la liste, créez-en un grâce au formulaire en dessous.<br />
-                Il sera créé, ajouté à la liste et automatiquement sélectionné.
+                Il sera créé, ajouté à la liste et automatiquement sélectionné.<br/>
+                <a class="text-info" href="" id="add-product-url">Voir la page produit</a>
             </p>
-            <form action="" method="post">
-                @csrf
                 <input type="hidden" name="shop_id" value="" id="shop_id">
                 <input type="hidden" id="loop_index" value="" >
+                @csrf
 
                 <div class="grid place-items-center">
                     <div class="grid grid-cols-2 place-items-center gap-2">
-                        <select id="edit-product-brand" class="select select-bordered w-full max-w-xs mb-3" name="brand_id" required="required">
+                        <select id="add-product-brand" class="select select-bordered w-full max-w-xs mb-3" name="brand_id" required="required">
                             <option disabled selected>Marque</option>
                             @foreach ($brands as $brand)
                                 <option value="{{ $brand->id }}" >{{ $brand->name }}</option>
@@ -102,7 +112,7 @@
                                 </select>
                             @else
                                 <input placeholder="{{ $propertyName }}"
-                                       id="edit-product-prop{{ $loop->iteration }}"
+                                       id="add-product-prop{{ $loop->iteration }}"
                                        type="{{ $propertyAttributes['values'] }}"
                                        name="prop{{ $loop->iteration }}"
                                        class="input input-bordered w-full max-w-xs mb-3"
@@ -122,8 +132,7 @@
                     </div>
                 </div>
 
-                <button id="add-product-from-shop" type="submit" class="btn btn-success mb-6 w-full justify-self-end">Ajouter</button>
-            </form>
+                <button id="add-product-from-shop" type="button" class="btn btn-success mb-6 w-full justify-self-end">Ajouter</button>
         </div>
         <form method="dialog" class="modal-backdrop">
             <button>close</button>

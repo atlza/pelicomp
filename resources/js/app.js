@@ -146,31 +146,34 @@ document.addEventListener("DOMContentLoaded", function() {
         addProductFromShop.addEventListener("click", function () {
 
             let postObj = {
-                brand_id: 1,
-                product_name: document.getElementById("add-product-name").value,
-                product_prop1: document.getElementById("add-product-prop1").value,
-                product_prop2: document.getElementById("add-product-prop2").value,
-                product_prop3: document.getElementById("add-product-prop3").value,
-                product_prop4: document.getElementById("add-product-prop4").value,
-                product_prop5: document.getElementById("add-product-prop5").value,
-                product_gtin: document.getElementById("add-product-gtin").value
+                _token: document.getElementsByName("_token")[0].value,
+                brand_id: document.getElementById("add-product-brand").value,
+                name: document.getElementById("add-product-name").value,
+                prop1: document.getElementById("add-product-prop1").value,
+                prop2: document.getElementById("add-product-prop2").value,
+                prop3: document.getElementById("add-product-prop3").value,
+                prop4: document.getElementById("add-product-prop4").value,
+                prop5: document.getElementById("add-product-prop5").value,
+                gtin: document.getElementById("add-product-gtin").value
             }
             let post = JSON.stringify(postObj)
 
-            const url = "https://jsonplaceholder.typicode.com/posts"
+            const url = "/products/add"
             let xhr = new XMLHttpRequest()
             xhr.open('POST', url, true)
             xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+            xhr.responseType = 'json';
             xhr.send(post);
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    //on créé en ajax le produit correspondant aux champs
+                    let loop = document.getElementById("loop_index").value;
+                    let productSelect = document.getElementById('add-product-from-shop-product-exists-' + loop );
+                    productSelect.options[productSelect.options.length] =
+                        new Option(xhr.response.brand.name + ' ' + xhr.response.productAdded.name,
+                            xhr.response.productAdded.id);
+                    productSelect.value = xhr.response.productAdded.id;
 
-                    //on récupère les données de l'élément créé
-
-                    //on les place dans le select de la ligne du tableau
-
-                    //on sélectionne la dite ligne
+                    document.getElementById("modal-link-product").close()
                 }
             }
         });
@@ -184,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("loop_index").value = event.currentTarget.getAttribute("data-loop-index");
         document.getElementById("add-product-modal-title").innerText = event.currentTarget.getAttribute("data-product-name");
         document.getElementById("add-product-gtin").value = event.currentTarget.getAttribute("data-product-gtin");
+        document.getElementById("add-product-url").setAttribute('href', event.currentTarget.getAttribute("data-product-url"));
         document.getElementById("modal-link-product").showModal()
     }));
 
