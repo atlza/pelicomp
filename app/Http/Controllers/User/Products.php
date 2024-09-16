@@ -73,9 +73,9 @@ class Products extends Controller
     public function saveOffers(Request $request)
     {
         try {
-
             if(!empty( $request->product_id )) foreach ( $request->product_id as $indice => $product_id ){
                 if( !empty($product_id) ){
+
                     Offer::withTrashed()->updateOrCreate([
                         'product_id' => $product_id,
                         'shop_id' => $request->shop_id,

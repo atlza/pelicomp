@@ -11,7 +11,7 @@ class Offer extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['shop_id', 'url', 'product_id', 'deleted_at', 'user_id'];
+    protected $fillable = ['shop_id', 'url', 'product_id', 'deleted_at', 'user_id', 'price'];
     protected $dates = ['created_on', 'updated_at'];
 
     public static function allByProductAndShop()
