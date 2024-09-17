@@ -37,7 +37,6 @@ class UpdateProductOffers extends Command
             ->limit(50)
             ->get();
 
-        dump($offersToUpdate->count());
         if( !empty($offersToUpdate) ) foreach ( $offersToUpdate as $anOffer ) {
 
             echo "\n".'-------------------------------';
@@ -52,6 +51,11 @@ class UpdateProductOffers extends Command
                 $anOffer->save();
 
                 $this->log('update', 'offer', $anOffer->id);
+            }
+            else{
+                $anOffer->price = null;
+                $anOffer->save();
+                $this->log('cannot update', 'offer', $anOffer->id);
             }
             sleep(1);
         }
