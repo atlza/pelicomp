@@ -8,6 +8,7 @@ use App\Models\Shop;
 use App\Traits\LogTrait;
 use App\Traits\ParserTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class Offers extends Controller
@@ -32,7 +33,8 @@ class Offers extends Controller
             $offer->user_id = Auth::user()->id;
             $offer->save();
 
-            if( !$offerDatas = $this->readProductUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
+            $response = $this->callOneUrl($offer->url, false);
+            if( !$offerDatas = $this->readHtmlResponse( $response, false ) ) throw new \Exception('Unable to read data from page');
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();
@@ -42,6 +44,7 @@ class Offers extends Controller
 
             return redirect()->route("home")->with('message', trans('Offre correctement ajoutée, prix ajouté'));
         } catch (\Exception $e) {
+            if( App::isLocal() ) dd($e->getMessage());
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }
@@ -85,7 +88,7 @@ class Offers extends Controller
             return redirect()->back()->with('message', trans($offers_saved . ' offres correctement ajoutées'));
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            if( App::isLocal() ) dd($e->getMessage());
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }
