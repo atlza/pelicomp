@@ -71,7 +71,8 @@ class Offers extends Controller
                         'deleted_at' => null
                     ]);
 
-                    if( $offerDatas = $this->readProductUrl( $offer->url, false ) ) {
+                    $response = $this->callOneUrl($offer->url, false);
+                    if( $offerDatas = $this->readHtmlResponse( $response, false ) ) {
                         $offer->price = $offerDatas['price'];
                         $offer->save();
 
@@ -95,7 +96,8 @@ class Offers extends Controller
 
             $offer = Offer::find($offerId);
 
-            if( !$offerDatas = $this->readProductUrl( $offer->url, false ) ) throw new \Exception('Unable to read data from page');
+            $response = $this->callOneUrl($offer->url, false);
+            if( !$offerDatas = $this->readHtmlResponse( $response, false ) ) throw new \Exception('Unable to read data from page');
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();
