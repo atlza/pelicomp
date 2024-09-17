@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Log;
 use App\Traits\LogTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class Brands extends Controller
@@ -23,6 +24,8 @@ class Brands extends Controller
 
     public function add(Request $request)
     {
+
+
         $request->validate([
             'name' => 'required|string',
         ]);
@@ -34,8 +37,13 @@ class Brands extends Controller
 
             $this->log('create', 'brand', $brand->id);
 
-            return redirect()->route("manage-products")->with('message', trans('Marque correctement ajoutée'));
+            return redirect()->back()->with('message', trans('Marque correctement ajoutée'));
         } catch (\Exception $e) {
+
+            if( App::isLocal() ) {
+                dump($request->all());
+                dd( $e->getMessage());
+            }
             return back()->with("error", trans('Erreur lors de l\'enregistrement des données'));
         }
     }

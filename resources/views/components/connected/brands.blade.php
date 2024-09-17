@@ -38,7 +38,7 @@
             <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
             <div class="menu p-4 w-80 min-h-full bg-base-200 text-base-content prose">
                 <h2>Ajouter une marque</h2>
-                <form action="{{ route('manage-products-add') }}" method="post">
+                <form action="{{ route('manage-brand-add') }}" method="post">
                     @csrf
                     <input type="text" name="name" placeholder="Nom de la marque" class="input input-bordered w-full max-w-xs mb-3" />
                     <button type="submit" class="btn btn-success">Enregistrer</button>

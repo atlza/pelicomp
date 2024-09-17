@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Brand extends Model
 {
     use HasFactory;
+    protected $fillable = ['name'];
 
     public function product():hasMany
     {
