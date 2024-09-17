@@ -37,10 +37,17 @@ class UpdateProductOffers extends Command
             ->limit(50)
             ->get();
 
-        dump($offersToUpdate);
-
+        dump($offersToUpdate->count());
         if( !empty($offersToUpdate) ) foreach ( $offersToUpdate as $anOffer ) {
-            if( $offerDatas = $this->readProductUrl( $anOffer->url, true ) ) {
+
+            echo "\n".'-------------------------------';
+            echo "\n".$anOffer->url;
+
+            $response = $this->callOneUrl($anOffer->url, false);
+            if( $offerDatas = $this->readHtmlResponse( $response, false ) ) {
+
+                echo "\n".$offerDatas['price'];
+
                 $anOffer->price = $offerDatas['price'];
                 $anOffer->save();
 

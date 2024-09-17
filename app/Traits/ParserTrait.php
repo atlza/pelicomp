@@ -11,15 +11,17 @@ use voku\helper\HtmlDomParser;
 trait ParserTrait
 {
     private $datasFromUrl = [];
+    private $headers = [
+        'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language' => 'en-US,en;q=0.5',
+        'Accept-Encoding' => 'gzip, deflate',
+        'Connection' => 'keep-alive',
+        'Upgrade-Insecure-Requests' => '1',
+    ];
+    private $options = ["verify"=>false];
 
-    public function readProductUrl( $urls, $withDebug = false )
+    public function readProductUrl( array $urls, $withDebug = false )
     {
-        $returnString = false;
-        if( !is_array($urls) ){
-            $urls = [$urls];
-            $returnString = true;
-        }
-
         Http::concurrent(
             5, //this is the concurrency
             function (Pool $pool) use($urls, $withDebug): Generator {
@@ -31,14 +33,8 @@ trait ParserTrait
 
                     yield $pool->as('request')
                         ->withUserAgent( config('pelicomp.user_agent'))
-                        ->withHeaders([
-                            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                            'Accept-Language' => 'en-US,en;q=0.5',
-                            'Accept-Encoding' => 'gzip, deflate',
-                            'Connection' => 'keep-alive',
-                            'Upgrade-Insecure-Requests' => '1',
-                        ])
-                        ->withOptions(["verify"=>false])
+                        ->withHeaders($this->headers)
+                        ->withOptions($this->options)
                         ->get( $url );
                 }
             },
@@ -47,22 +43,20 @@ trait ParserTrait
             }
         );
 
-        if( $returnString ) return $this->datasFromUrl[0];
-        else return $this->datasFromUrl;
+        return $this->datasFromUrl;
+    }
+
+    public function callOneUrl( string $url, $withDebug = false )
+    {
+        return Http::withUserAgent(config('pelicomp.user_agent'))
+            ->withHeaders($this->headers)
+            ->withOptions($this->options)
+            ->get( $url );
     }
 
     public function readProductsListUrl( $url, $withDebug = false )
     {
-        $response = Http::withUserAgent(config('pelicomp.user_agent'))
-        ->withHeaders([
-            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language' => 'en-US,en;q=0.5',
-            'Accept-Encoding' => 'gzip, deflate',
-            'Connection' => 'keep-alive',
-            'Upgrade-Insecure-Requests' => '1',
-        ])
-            ->withOptions(["verify"=>false])
-            ->get( $url );
+        $response = $this->callOneUrl($url, $withDebug);
 
         $htmlContent = $response->body();
         $dom = HtmlDomParser::str_get_html($htmlContent);
