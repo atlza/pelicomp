@@ -53,6 +53,7 @@ class UpdateProductOffers extends Command
 
                 $this->log('update', 'offer', $anOffer->id);
             }
+            sleep(1);
         }
 
     }
