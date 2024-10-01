@@ -11,7 +11,7 @@
                 <th>By</th>
                 <th>Model</th>
                 <th>Model ID</th>
-                <th>Model infos</th>
+                <th tabulator-formatter="html" >Model infos</th>
                 <th>Date</th>
             </tr>
             </thead>
@@ -32,7 +32,7 @@
                     <td>
                         @switch($log->logable_type)
                             @case('App\Models\Product')
-                            <a href="{{ route('manage-products-edit', $log->logable_id) }}">
+                            <a class="text-secondary" href="{{ route('manage-products-edit', $log->logable_id) }}">
                             {{ $log->logable->brand->name }}&nbsp;
                             {{ $log->logable->name }}
                             {{ $log->logable->prop1 }}
@@ -45,7 +45,7 @@
                             @break
 
                             @case('App\Models\Offer')
-                            <a target="_blank" href="{{ $log->logable->url }}">
+                            <a class="text-secondary" target="_blank" href="{{ $log->logable->url }}">
                             {{ $log->logable->shop->name }}
                             </a>
                             @break

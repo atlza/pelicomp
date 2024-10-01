@@ -19,8 +19,8 @@
                     <tr>
                         <th>#id</th>
                         <th>name</th>
-                        <th>url</th>
-                        <th>Actions</th>
+                        <th tabulator-formatter="html">url</th>
+                        <th tabulator-formatter="html">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -28,9 +28,9 @@
                         <tr>
                             <td>{{ $shop->id }}</td>
                             <td>{{ $shop->name }}</td>
-                            <td><a href="https://{{ $shop->url }}" target="_blank">{{ $shop->url }}</a></td>
+                            <td><a class="text-secondary" href="https://{{ $shop->url }}" target="_blank">{{ $shop->url }}</a></td>
                             <td>
-                                <a href="#" title="Ajout d'une liste de produits" class="add-products" data-shop="{{ $shop->id }}" ><i class="mr-2" data-lucide="copy-plus"></i></a>
+                                <a href="#" title="Ajout d'une liste de produits" class="add-products text-secondary" data-shop="{{ $shop->id }}" ><i class="mr-2" data-lucide="copy-plus"></i></a>
                             </td>
                         </tr>
                     @endforeach

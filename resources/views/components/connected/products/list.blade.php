@@ -22,7 +22,7 @@
                         @endforeach
 
                         @if( in_array(auth()->user()->getRoleNames()->first(), ['admin', 'super admin']) )
-                        <th>Actions</th>
+                        <th tabulator-formatter="html" >Actions</th>
                         @endif
                     </tr>
                 </thead>

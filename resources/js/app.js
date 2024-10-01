@@ -1,7 +1,5 @@
 import './bootstrap';
-
-import {Grid} from "gridjs";
-import "gridjs/dist/theme/mermaid.css";
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
 
 import {
     Aperture,
@@ -34,85 +32,127 @@ createIcons({
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    function tableStatesListener(state, prevState) {
-        if (prevState.status < state.status) {
-            if (prevState.status === 2 && state.status === 3) {
-                const triggers = document.querySelectorAll('.add-offer');
-                triggers.forEach(el => el.addEventListener('click', event => {
-                    document.getElementById("offer_shop").value = event.currentTarget.getAttribute("data-shop");
-                    document.getElementById("offer_product").value = event.currentTarget.getAttribute("data-product");
+    console.log('tabilatpor');
+    let tableTabulator = new Tabulator('#sourceTable', {
+        layout: 'fitColumns',
+        pagination:"local",       //paginate the data
+        paginationSize:50,         //allow 7 rows per page of data
+        paginationCounter:"rows", //display count of paginated rows in footer
+    });
+    // Fonction pour filtrer la table en fonction de la recherche
+    function liveSearch() {
+        const input = document.getElementById("tabulatorSearch").value.toLowerCase();
 
-                    document.getElementById("add_offer_modal").showModal();
-                }));
-
-                const triggerProducts = document.querySelectorAll('.add-products');
-                triggerProducts.forEach(el => el.addEventListener('click', event => {
-                    document.getElementById("shop_id").value = event.currentTarget.getAttribute("data-shop");
-                    document.getElementById("add_products_modal").showModal();
-                }));
-
-                const triggersUsers = document.querySelectorAll('.edit-user-role');
-                triggersUsers.forEach(el => el.addEventListener('click', event => {
-                    document.getElementById("user_id").value = event.currentTarget.getAttribute("data-user");
-                    document.getElementById("user_edit_modal").showModal();
-                }));
-
-                //edit products
-                const triggersProducts = document.querySelectorAll('.edit-product');
-                triggersProducts.forEach(el => el.addEventListener('click', event => {
-                    let productId = event.currentTarget.getAttribute("data-id");
-                    let productName = event.currentTarget.getAttribute("data-name");
-                    let productBrandId = event.currentTarget.getAttribute("data-brand-id");
-
-                    document.getElementById("edit-product-id").value = productId;
-                    document.getElementById("edit-product-name").value = productName;
-
-                    let elementBrand = document.getElementById("edit-product-brand");
-                    elementBrand.selectedIndex = [...elementBrand.options].find(o => o.value === productBrandId).index;
-
-                    for (let i = 1; i < 6; i++) {
-                        let property = event.currentTarget.getAttribute("data-prop" + i);
-
-                        let element = document.getElementById("edit-product-prop" + i);
-                        if (element.tagName.toLowerCase() === 'input') {
-                            element.value = property;
-                        } else {
-                            //element is a select
-                            console.log(element.options);
-                            element.selectedIndex = [...element.options].find(o => o.value === property || {}).index;
-                        }
+        // Appliquer un filtre sur toutes les colonnes en fonction de la saisie utilisateur
+        tableTabulator.setFilter(function (data) {
+            // Parcourir chaque colonne de l'objet 'data' (chaque ligne de la table)
+            for (const key in data) {
+                if (data[key] !== null && typeof data[key] !== "undefined") {
+                    // Convertir la valeur en chaîne et vérifier si elle contient la recherche
+                    if (String(data[key]).toLowerCase().includes(input)) {
+                        return true;  // Si une correspondance est trouvée, on retourne true pour garder la ligne
                     }
-                    document.getElementById("my-drawer-4").checked = true;
-                }));
-
-                //delete offers
-                const triggersOffers = document.querySelectorAll('.delete-offer');
-                triggersOffers.forEach(el => el.addEventListener('click', event => {
-                    document.getElementById("delete-offer-id").value = event.currentTarget.getAttribute("data-id");
-                    document.getElementById("modal-delete-offer").showModal()
-                }));
-
-            }
-        }
-    }
-
-    let sourceTable = document.getElementById('sourceTable');
-    if( document.body.contains(sourceTable) ){
-        const grid = new Grid({
-            from: sourceTable,
-            sort: true,
-            search: true,
-            fixedHeader: true,
-            resizable: true,
-            language: {
-                'search': {
-                    'placeholder': '🔍 Recherche...'
                 }
             }
+            return false;  // Si aucune correspondance n'est trouvée, la ligne est ignorée
         });
-        grid.config.store.subscribe(tableStatesListener);
-        grid.render(document.getElementById('destinationWrapper'));
     }
+
+    // Fonction de debounce pour éviter d'appeler liveSearch trop souvent
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);  // Annule l'appel précédent si un nouveau frappe
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);  // Déclenche après le délai
+        };
+    }
+
+    // Ajouter un Event Listener sur le champ de recherche avec un délai de 300ms (debouncing)
+    document.getElementById("tabulatorSearch").addEventListener("keyup", debounce(liveSearch, 300));
+
+    // Utiliser l'événement "tableBuilt" pour savoir quand la table est prête
+    tableTabulator.on("tableBuilt", function(){
+        console.log("La table est complètement générée et prête à être manipulée.");
+
+        const triggers = document.querySelectorAll('.add-offer');
+        triggers.forEach(el => el.addEventListener('click', event => {
+            document.getElementById("offer_shop").value = event.currentTarget.getAttribute("data-shop");
+            document.getElementById("offer_product").value = event.currentTarget.getAttribute("data-product");
+
+            document.getElementById("add_offer_modal").showModal();
+        }));
+
+
+        const triggerProducts = document.querySelectorAll('.add-products');
+        triggerProducts.forEach(el => el.addEventListener('click', event => {
+            document.getElementById("shop_id").value = event.currentTarget.getAttribute("data-shop");
+            document.getElementById("add_products_modal").showModal();
+        }));
+
+        const triggersUsers = document.querySelectorAll('.edit-user-role');
+        triggersUsers.forEach(el => el.addEventListener('click', event => {
+            document.getElementById("user_id").value = event.currentTarget.getAttribute("data-user");
+            document.getElementById("user_edit_modal").showModal();
+        }));
+
+        //edit products
+        const triggersProducts = document.querySelectorAll('.edit-product');
+        triggersProducts.forEach(el => el.addEventListener('click', event => {
+            let productId = event.currentTarget.getAttribute("data-id");
+            let productName = event.currentTarget.getAttribute("data-name");
+            let productBrandId = event.currentTarget.getAttribute("data-brand-id");
+
+            document.getElementById("edit-product-id").value = productId;
+            document.getElementById("edit-product-name").value = productName;
+
+            let elementBrand = document.getElementById("edit-product-brand");
+            elementBrand.selectedIndex = [...elementBrand.options].find(o => o.value === productBrandId).index;
+
+            for (let i = 1; i < 6; i++) {
+                let property = event.currentTarget.getAttribute("data-prop" + i);
+
+                let element = document.getElementById("edit-product-prop" + i);
+                if (element.tagName.toLowerCase() === 'input') {
+                    element.value = property;
+                } else {
+                    //element is a select
+                    console.log(element.options);
+                    element.selectedIndex = [...element.options].find(o => o.value === property || {}).index;
+                }
+            }
+            document.getElementById("my-drawer-4").checked = true;
+        }));
+
+        //delete offers
+        const triggersOffers = document.querySelectorAll('.delete-offer');
+        triggersOffers.forEach(el => el.addEventListener('click', event => {
+            document.getElementById("delete-offer-id").value = event.currentTarget.getAttribute("data-id");
+            document.getElementById("modal-delete-offer").showModal()
+        }));
+
+    });
+
+
+
+    /*    let sourceTable = document.getElementById('sourceTable');
+        if( document.body.contains(sourceTable) ){
+            const grid = new Grid({
+                from: sourceTable,
+                sort: true,
+                search: true,
+                fixedHeader: true,
+                resizable: true,
+                language: {
+                    'search': {
+                        'placeholder': '🔍 Recherche...'
+                    }
+                }
+            });
+            grid.config.store.subscribe(tableStatesListener);
+            grid.render(document.getElementById('destinationWrapper'));
+        }*/
 
     /*
      * Au clic sur add-product les champs du formulaire d'ajout/édition de produit sont réinitialisés et le drawer ouvert via la checkbox

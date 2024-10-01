@@ -12,7 +12,7 @@
                         <th>#id</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Rôle</th>
+                        <th tabulator-formatter="html" >Rôle</th>
                         <th>Date inscription</th>
                     </tr>
                     </thead>
@@ -24,7 +24,7 @@
                             <td>{{ $aUser->email }}</td>
                             <td>
                                 @if( !in_array($aUser->getRoleNames()->first(), ['admin', 'super admin']) || auth()->user()->can('Manage admins') )
-                                <a href="#" class="edit-user-role flex flex-row" data-user="{{ $aUser->id }}">
+                                <a href="#" class="text-secondary edit-user-role flex flex-row" data-user="{{ $aUser->id }}">
                                     <i data-lucide="pencil" class="mr-2"></i>
                                     {{ $aUser->getRoleNames()->first() }}
                                 </a>

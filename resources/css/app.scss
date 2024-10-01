@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+//@import "../../node_modules/tabulator-tables/src/scss/tabulator.scss";
+@import "../../node_modules/tabulator-tables/dist/css/tabulator_materialize.css";
 
 @font-face {
     font-family: 'Forta';

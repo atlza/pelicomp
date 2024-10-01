@@ -1,16 +1,31 @@
 <x-layout pageTitle="Comparateur de prix des pellicules photos sur internet" >
+
     <div id="destinationWrapper"></div>
 
-    <table id="sourceTable" class="table">
+    <label class="input input-bordered flex items-center gap-2 mb-3">
+        <input id="tabulatorSearch" type="search" class="grow" placeholder="Search" />
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="h-4 w-4 opacity-70">
+            <path
+                fill-rule="evenodd"
+                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                clip-rule="evenodd" />
+        </svg>
+    </label>
+
+    <table id="sourceTable" class="table mb-6">
         <thead>
         <tr>
-            <th>Marque</th>
-            <th>Nom</th>
+            <th tabulator-sorter="string">Marque</th>
+            <th tabulator-formatter="html" tabulator-headerFilter="tabulatorSearch" >Nom</th>
             @foreach( $properties as $aPropertyName => $aPropertyValues )
                 <th>{{ $aPropertyName }}</th>
             @endforeach
             @foreach ($shops as $shop)
-                <th class="w-3">{{ $shop->name }}</th>
+                <th tabulator-formatter="html" tabulator-sorter="alphanum" >{{ $shop->name }}</th>
             @endforeach
         </tr>
         </thead>
@@ -19,7 +34,7 @@
             <tr>
                 <td>{{ $product->brand->name }}</td>
                 <td>
-                    <a href="{{ route('front-product', $product->slug) }}">
+                    <a class="text-secondary" href="{{ route('front-product', $product->slug) }}">
                         <i data-lucid="eye" class="mr-2"></i>
                         {{ $product->name }}</a>
                 </td>
@@ -29,15 +44,18 @@
                     @endif
                 @endforeach
                 @foreach ($shops as $shop)
-                    <td class="w-3 text-center">
+                    <td>
                         @if( Auth::check() && auth()->user()->can('Manage offers') && empty($offers[$product->id][$shop->id]) )
+                            <span class="hidden">0</span>
                             <a href="#" title="Ajouter une offre" class="add-offer text-secondary flex"
                                id="offer_{{ $shop->id }}_{{ $product->id }}"
                                data-shop="{{ $shop->id }}" data-product="{{ $product->id }}">
                                 <i class="h-4 mx-auto" data-lucide="plus"></i>
                             </a>
                         @elseif( !empty($offers[$product->id][$shop->id]->price) )
+                            <span class="hidden">{{ $offers[$product->id][$shop->id]->price }}</span>
                             <a href="{{ $offers[$product->id][$shop->id]->url }}"
+                               class="text-info"
                                target="_blank"
                                title="Mis à jour le {{ date('d/m/Y', strtotime($offers[$product->id][$shop->id]->updated_at)) }}">
                                 {{ $offers[$product->id][$shop->id]->price }}€

@@ -1,5 +1,5 @@
 <x-layout pageTitle="A propos de péloches.com : contribuer, corriger, logiciel libre" >
-    <div class="container mx-auto py-8 text-content ">
+    <div class="container mx-auto py-8 text-content mb-6">
         <div class="prose">
             <h1>A propos de Péloches.</h1>
             <h2>Origine</h2>
