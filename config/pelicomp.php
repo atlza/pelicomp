@@ -4,6 +4,8 @@ return [
     'email_from' => env('MAIL_FROM_ADDRESS'),
     'user_agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.4; rv:124.0) Gecko/20100101 Firefox/124.0",
 
+    'umamai_id' => env('UMAMI_WEBSITE_ID'),
+
     //defines properties, name and authorized values
     'properties' => [
         'format' => [

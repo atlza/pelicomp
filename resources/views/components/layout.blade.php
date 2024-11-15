@@ -169,6 +169,10 @@
         Made with <i class="inline-block" data-lucide="clock"></i> and <i class="inline-block text-error text-xs" data-lucide="heart"></i> by <a href="https://www.atlza.com" target="_blanck" title="Guillaume Le Roy">AtlzA</a>, sponsored by <a href="https://work.withmu.com" target="_blanck" title="Freelance Développement Laravel">Mu</a>.
     </footer>
 
+    @if( !empty(config('pelicomp.umamai_id')) )
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="{{  config('pelicomp.umamai_id')  }}"></script>
+    @endif
+    @vite('resources/js/app.js')
+
 </body>
-@vite('resources/js/app.js')
 </html>
