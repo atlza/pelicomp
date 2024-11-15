@@ -45,7 +45,8 @@
                 @endforeach
                 @foreach ($shops as $shop)
                     <td>
-                        @if( Auth::check() && auth()->user()->can('Manage offers') && empty($offers[$product->id][$shop->id]) )
+                        @if( Auth::check() && auth()->user()->can('Manage offers') &&
+                              (empty($offers[$product->id][$shop->id]) || $offers[$product->id][$shop->id]->price == 0) )
                             <span class="hidden">0</span>
                             <a href="#" title="Ajouter une offre" class="add-offer text-secondary flex"
                                id="offer_{{ $shop->id }}_{{ $product->id }}"
