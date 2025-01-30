@@ -72,6 +72,12 @@ body{
         }
 
     }
+    .tabulator .tabulator-footer .tabulator-footer-contents{
+        flex-direction: row-reverse;
+    }
+    .tabulator .tabulator-footer .tabulator-paginator{
+        flex: 0;
+    }
 
     .gridjs-search{
         @apply w-full;

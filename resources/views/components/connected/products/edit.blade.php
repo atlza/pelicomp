@@ -40,6 +40,9 @@
                         </label>
 
                         @foreach( $properties as $propertyName => $propertyAttributes )
+                            @php
+                                $propertyLoopIndex = $loop->iteration;
+                            @endphp
                             <label class="form-control w-full max-w-sm">
                                 <div class="label">
                                     <span class="label-text">{{ $propertyName }} :</span>
@@ -49,10 +52,11 @@
                                             id="edit-product-prop{{ $loop->iteration }}"
                                             class="select select-bordered w-full  mb-3"
                                         {!! $propertyAttributes['mandatory'] === true ? 'required="required"' : '' !!} >
+                                            <option></option>
                                         @foreach( $propertyAttributes['values'] as $anAttribute )
                                             <option value="{{ $anAttribute  }}"
-                                                {!! $anAttribute == $product->{'prop'.$loop->iteration} ? 'selected="true"' : '' !!}
-                                            >{{ $anAttribute }}</option>
+                                                {!! $anAttribute == $product->{'prop'.$propertyLoopIndex} ? 'selected="selected"' : '' !!}
+                                            >{{ $anAttribute }} - {{ $product->{'prop'.$propertyLoopIndex} }}</option>
                                         @endforeach
                                     </select>
                                 @else

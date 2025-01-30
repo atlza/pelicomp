@@ -17,7 +17,7 @@ class Products extends Controller
 
     public function all()
     {
-        $products = Product::all();
+        $products = Product::orderByDesc('id')->get();
         $brands = Brand::all();
         $properties = config('pelicomp.properties');
 

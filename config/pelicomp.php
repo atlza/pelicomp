@@ -19,16 +19,16 @@ return [
         ],
         'type' => [
             'values' => ['Noir et blanc', 'couleur', 'couleur ciné', 'couleur reversible','panchromatique', 'panchromatique ciné', 'orthochromatique',
-                'orthopanchromatique', 'superpanchromatique', 'hyperpanchromatique', 'monochrome'],
+                'orthopanchromatique', 'superpanchromatique', 'hyperpanchromatique', 'monochrome', 'infrared'],
             'mandatory' => true,
         ],
-        'quantité' => [
+        'qté' => [
             'values' => 'number', //if values is a string, it's a type for html input
             'mandatory' => true,
             'default' => 1
         ],
         'chimie' => [
-            'values' => ['E6', 'C41', 'E6 et C41', 'n&b', 'ECN-2'],
+            'values' => ['E6', 'C41', 'E6 et C41', 'BW', 'ECN-2'],
             'mandatory' => false,
         ]
     ],
