@@ -45,16 +45,20 @@ class UpdateProductOffers extends Command
             $response = $this->callOneUrl($anOffer->url, false);
             if( $offerDatas = $this->readHtmlResponse( $response, false ) ) {
 
-                echo "\n".$offerDatas['price'];
+                echo "\n price found: ".$offerDatas['price'];
 
                 $anOffer->price = $offerDatas['price'];
                 $anOffer->save();
+                $anOffer->touch();
 
+                echo "\n Offer updated: ".$anOffer->id;
                 $this->log('update', 'offer', $anOffer->id);
             }
             else{
                 $anOffer->price = null;
                 $anOffer->save();
+                $anOffer->touch();
+                echo "\n Offer NOT updated: ".$anOffer->id;
                 $this->log('cannot update', 'offer', $anOffer->id);
             }
             sleep(1);
