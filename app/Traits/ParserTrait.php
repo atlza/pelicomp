@@ -91,7 +91,6 @@ trait ParserTrait
 
     private function readHtmlResponse($response, $withDebug = false)
     {
-
         $htmlContent = $response->body();
         $dom = HtmlDomParser::str_get_html($htmlContent);
 
@@ -101,10 +100,11 @@ trait ParserTrait
 
         $elementsOrFalse = $dom->findMultiOrFalse('script');
         if( !empty($elementsOrFalse) ){
+
             foreach ( $elementsOrFalse as $anElement) {
 
                 if( $anElement->hasAttribute('type') && $anElement->getAttribute('type') == 'application/ld+json' ){
-                    $data = json_decode($anElement->text());
+                    $data = json_decode(str_replace("\n", '  ',$anElement->text()) );
 
                     if( is_array($data) ){ //cas retrocamera.be
                         $data = $data[0];
@@ -118,7 +118,6 @@ trait ParserTrait
                     }
 
                     if( !empty($data) && !empty($data->{'@type'}) ){
-
                         if( strtolower($data->{'@type'}) == 'product' ){
                             $datasFromUrl['name'] = $data->name;
                             if( !empty($data->gtin13) ) $datasFromUrl['gtin'] = $data->gtin13;

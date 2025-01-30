@@ -33,8 +33,9 @@ class Offers extends Controller
             $offer->user_id = Auth::user()->id;
             $offer->save();
 
-            $response = $this->callOneUrl($offer->url, false);
-            if( !$offerDatas = $this->readHtmlResponse( $response, false ) ) throw new \Exception('Unable to read data from page');
+            $response = $this->callOneUrl($offer->url);
+
+            if( !$offerDatas = $this->readHtmlResponse( $response ) ) throw new \Exception('Unable to read data from page');
             else{
                 $offer->price = $offerDatas['price'];
                 $offer->save();
