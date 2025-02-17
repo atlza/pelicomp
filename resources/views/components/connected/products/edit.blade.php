@@ -73,10 +73,35 @@
                             </label>
 
                         @endforeach
-
-                        <button type="submit" class="btn btn-success w-1/2  btn-outline">Enregistrer</button>
+                        <div class="flex flex-row justify-start">
+                            @if( in_array(auth()->user()->getRoleNames()->first(), ['admin', 'super admin']) )
+                            <button type="button" id="btn_confirm_product_delete" data-id="{{ $product->id }}" class="btn btn-error min-w-1/3">supprimer</button>
+                            @endif
+                            <button type="submit" class="ml-3 btn btn-success min-w-1/3  btn-outline">Enregistrer</button>
+                        </div>
                     </form>
-
+                    @if( in_array(auth()->user()->getRoleNames()->first(), ['admin', 'super admin']) )
+                    <dialog id="confirm_delete_product" class="modal modal-bottom sm:modal-middle">
+                        <div class="modal-box">
+                            <form method="dialog">
+                                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            </form>
+                            <h3 class="text-lg font-bold">Confirmation de suppression</h3>
+                            <p class="py-4">
+                                Voulez-vous vraiment supprimer ce produit ?<br />
+                                Les offres attachées seront supprimées, cette action est irréversible.
+                            </p>
+                            <div class="modal-action">
+                                <form method="post" action="{{ route('manage-products-delete') }}">
+                                    @csrf
+                                    <input type="hidden" name="product" id="delete-product-id" value="">
+                                    <!-- if there is a button in form, it will close the modal -->
+                                    <button type="submit" class="btn btn-error text-white">Confirmer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </dialog>
+                    @endif
                 </div>
 
                 <div class="w-2/3 p-3">

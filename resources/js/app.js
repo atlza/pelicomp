@@ -32,31 +32,12 @@ createIcons({
 
 document.addEventListener("DOMContentLoaded", function() {
 
-    console.log('tabilatpor');
     let tableTabulator = new Tabulator('#sourceTable', {
         layout: 'fitColumns',
         pagination:"local",       //paginate the data
         paginationSize:50,         //allow 7 rows per page of data
         paginationCounter:"rows", //display count of paginated rows in footer
     });
-    // Fonction pour filtrer la table en fonction de la recherche
-    function liveSearch() {
-        const input = document.getElementById("tabulatorSearch").value.toLowerCase();
-
-        // Appliquer un filtre sur toutes les colonnes en fonction de la saisie utilisateur
-        tableTabulator.setFilter(function (data) {
-            // Parcourir chaque colonne de l'objet 'data' (chaque ligne de la table)
-            for (const key in data) {
-                if (data[key] !== null && typeof data[key] !== "undefined") {
-                    // Convertir la valeur en chaîne et vérifier si elle contient la recherche
-                    if (String(data[key]).toLowerCase().includes(input)) {
-                        return true;  // Si une correspondance est trouvée, on retourne true pour garder la ligne
-                    }
-                }
-            }
-            return false;  // Si aucune correspondance n'est trouvée, la ligne est ignorée
-        });
-    }
 
     // Fonction de debounce pour éviter d'appeler liveSearch trop souvent
     function debounce(func, delay) {
@@ -70,11 +51,33 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Ajouter un Event Listener sur le champ de recherche avec un délai de 300ms (debouncing)
-    document.getElementById("tabulatorSearch").addEventListener("keyup", debounce(liveSearch, 300));
+    const inputField = document.getElementById("tabulatorSearch");
+    if( inputField !== undefined && inputField !== null ) {
+        inputField.addEventListener("keyup", debounce(liveSearch, 300));
+
+        // Fonction pour filtrer la table en fonction de la recherche
+        function liveSearch() {
+
+            let input = document.getElementById("tabulatorSearch").value.toLowerCase()
+            // Appliquer un filtre sur toutes les colonnes en fonction de la saisie utilisateur
+            tableTabulator.setFilter(function (data) {
+                // Parcourir chaque colonne de l'objet 'data' (chaque ligne de la table)
+                for (const key in data) {
+                    if (data[key] !== null && typeof data[key] !== "undefined") {
+                        // Convertir la valeur en chaîne et vérifier si elle contient la recherche
+                        if (String(data[key]).toLowerCase().includes(input)) {
+                            return true;  // Si une correspondance est trouvée, on retourne true pour garder la ligne
+                        }
+                    }
+                }
+                return false;  // Si aucune correspondance n'est trouvée, la ligne est ignorée
+            });
+
+        }
+    }
 
     // Utiliser l'événement "tableBuilt" pour savoir quand la table est prête
     tableTabulator.on("tableBuilt", function(){
-        console.log("La table est complètement générée et prête à être manipulée.");
 
         const triggers = document.querySelectorAll('.add-offer');
         triggers.forEach(el => el.addEventListener('click', event => {
@@ -118,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     element.value = property;
                 } else {
                     //element is a select
-                    console.log(element.options);
                     element.selectedIndex = [...element.options].find(o => o.value === property || {}).index;
                 }
             }
@@ -133,26 +135,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }));
 
     });
-
-
-
-    /*    let sourceTable = document.getElementById('sourceTable');
-        if( document.body.contains(sourceTable) ){
-            const grid = new Grid({
-                from: sourceTable,
-                sort: true,
-                search: true,
-                fixedHeader: true,
-                resizable: true,
-                language: {
-                    'search': {
-                        'placeholder': '🔍 Recherche...'
-                    }
-                }
-            });
-            grid.config.store.subscribe(tableStatesListener);
-            grid.render(document.getElementById('destinationWrapper'));
-        }*/
 
     /*
      * Au clic sur add-product les champs du formulaire d'ajout/édition de produit sont réinitialisés et le drawer ouvert via la checkbox
@@ -231,4 +213,14 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("modal-link-product").showModal()
     }));
 
+    /*
+     * Au clic on montre la modal de suppression de produit
+     */
+    const triggerDeleteProduct = document.getElementById('btn_confirm_product_delete');
+    triggerDeleteProduct.addEventListener('click', event => {
+        document.getElementById('delete-product-id').value = triggerDeleteProduct.dataset.id;
+        document.getElementById('confirm_delete_product').showModal();
+    });
+
 });
+

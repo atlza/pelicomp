@@ -131,4 +131,22 @@ class Products extends Controller
         return $product;
     }
 
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'product' => 'required|integer|exists:products,id',
+        ]);
+
+        try{
+            $product = Product::findorfail($request->product);
+            $product->delete();
+            $this->log('delete', 'product', $product->id);
+
+            return redirect()->route("manage-products")->with('message', trans('Produit supprimé'));
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('message', trans($e->getMessage()));
+        }
+    }
+
 }

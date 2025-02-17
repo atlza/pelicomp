@@ -89,8 +89,14 @@ trait ParserTrait
         else return false;
     }
 
-    private function readHtmlResponse($response, $withDebug = false)
+    private function readHtmlResponse($response, $withDebug = true)
     {
+
+        if( $withDebug ) echo "\n Response code";
+        if( $withDebug ) dump($response->getStatusCode());
+        if( $withDebug ) echo "\n Response phrase";
+        if( $withDebug ) dump($response->getReasonPhrase());
+
         $htmlContent = $response->body();
         $dom = HtmlDomParser::str_get_html($htmlContent);
 
@@ -102,8 +108,8 @@ trait ParserTrait
         if( !empty($elementsOrFalse) ){
 
             foreach ( $elementsOrFalse as $anElement) {
-
                 if( $anElement->hasAttribute('type') && $anElement->getAttribute('type') == 'application/ld+json' ){
+                    //dump($anElement->getAttribute('type'));
                     $data = json_decode(str_replace("\n", '  ',$anElement->text()) );
 
                     if( is_array($data) ){ //cas retrocamera.be
@@ -117,8 +123,12 @@ trait ParserTrait
                         }
                     }
 
-                    if( !empty($data) && !empty($data->{'@type'}) ){
+                    if( !empty($data)
+                        && !empty($data->{'@type'})
+                        && ( strtolower($data->{'@type'}) == 'product'
+                            || strtolower($data->{'@type'}) == 'webpage' )) {
                         if( strtolower($data->{'@type'}) == 'product' ){
+                            //dump(strtolower($data->{'@type'}));
                             $datasFromUrl['name'] = $data->name;
                             if( !empty($data->gtin13) ) $datasFromUrl['gtin'] = $data->gtin13;
 
@@ -135,6 +145,8 @@ trait ParserTrait
                             $datasFound = true;
                         }
                         elseif( strtolower($data->{'@type'}) == 'webpage' && !empty($data->mainEntity) && strtolower($data->mainEntity->{'@type'}) == 'product' ){ //cas digit-photo
+                            //dump(strtolower($data->{'@type'}));
+                            //dump(strtolower($data->mainEntity->{'@type'}));
                             $datasFromUrl['name'] = $data->mainEntity->name;
                             $datasFromUrl['gtin'] = $data->mainEntity->gtin13;
                             $datasFromUrl['price'] = $data->mainEntity->offers->price;
