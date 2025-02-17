@@ -109,6 +109,7 @@ class Products extends Controller
             $product = Product::findorfail($request->id);
 
             $product->name = $request->name;
+            $product->brand_id = $request->brand_id;
             $product->prop1 = $request->prop1;
             $product->prop2 = $request->prop2;
             $product->prop3 = $request->prop3;
