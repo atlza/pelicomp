@@ -32,11 +32,25 @@ class Shops extends Controller
         ]);
 
         try {
-            $shop = new Shop($request->only(['name', 'code', 'url']));
-            $shop->user_id = Auth::user()->id;
-            $shop->save();
 
-            $this->log('create', 'shop', $shop->id);
+            if( !empty($request->id) ){
+                $shop = Shop::findorfail($request->id);
+                $shop->name = $request->name;
+                $shop->code = $request->code;
+                $shop->url = $request->url;
+
+                if($request->hidden === 'true') $shop->hidden = true;
+                else $shop->hidden = false;
+
+                $this->log('edit', 'shop', $shop->id);
+            }
+            else{
+                $shop = new Shop($request->only(['name', 'code', 'url', 'hidden']));
+                $shop->user_id = Auth::user()->id;
+
+                $this->log('create', 'shop', $shop->id);
+            }
+            $shop->save();
 
             return redirect()->route("manage-shops")->with('message', trans('Boutique correctement ajoutée'));
         } catch (\Exception $e) {

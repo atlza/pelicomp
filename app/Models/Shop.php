@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shop extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'code', 'url'];
+    protected $fillable = ['name', 'code', 'url', 'hidden'];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

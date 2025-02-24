@@ -18,7 +18,8 @@ class Offer extends Model
     {
         $offersSorted = [];
 
-        $offers = Offer::all();
+        $visibleShops = Shop::where('hidden', false)->get();
+        $offers = Offer::whereIn('shop_id', $visibleShops->pluck('id'))->get();
         foreach ($offers as $anOffer) {
             if( !isset($offersSorted[$anOffer->product_id]) )  $offersSorted[$anOffer->product_id] = [];
 

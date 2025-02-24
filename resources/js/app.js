@@ -127,6 +127,26 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("my-drawer-4").checked = true;
         }));
 
+        //edit shops
+        const triggersShops = document.querySelectorAll('.edit-shop');
+        triggersShops.forEach(el => el.addEventListener('click', event => {
+            let shopId = event.currentTarget.getAttribute("data-id");
+            let shopName = event.currentTarget.getAttribute("data-name");
+            let shopCode = event.currentTarget.getAttribute("data-code");
+            let shopHidden = event.currentTarget.getAttribute("data-hidden");
+            let shopUrl = event.currentTarget.getAttribute("data-url");
+
+            document.getElementById("edit-shop-id").value = shopId;
+            document.getElementById("edit-shop-name").value = shopName;
+            document.getElementById("edit-shop-code").value = shopCode;
+            document.getElementById("edit-shop-url").value = shopUrl;
+
+            let elementHidden = document.getElementById("edit-shop-hidden");
+            elementHidden.selectedIndex = [...elementHidden.options].find(o => o.value === shopHidden || {}).index;
+
+            document.getElementById("my-drawer-4").checked = true;
+        }));
+
         //delete offers
         const triggersOffers = document.querySelectorAll('.delete-offer');
         triggersOffers.forEach(el => el.addEventListener('click', event => {
@@ -217,10 +237,14 @@ document.addEventListener("DOMContentLoaded", function() {
      * Au clic on montre la modal de suppression de produit
      */
     const triggerDeleteProduct = document.getElementById('btn_confirm_product_delete');
-    triggerDeleteProduct.addEventListener('click', event => {
-        document.getElementById('delete-product-id').value = triggerDeleteProduct.dataset.id;
-        document.getElementById('confirm_delete_product').showModal();
-    });
+    if( document.body.contains(triggerDeleteProduct) )
+    {
+        triggerDeleteProduct.addEventListener('click', event => {
+            document.getElementById('delete-product-id').value = triggerDeleteProduct.dataset.id;
+            document.getElementById('confirm_delete_product').showModal();
+        });
+    }
+
 
 });
 

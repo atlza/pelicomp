@@ -21,7 +21,7 @@ class Front extends Controller
             ->get();
 
         //$products = Product::all()->sortBy('name');
-        $shops = Shop::all();
+        $shops = Shop::where('hidden', false)->get();
         $offers = Offer::allByProductAndShop();
         $properties = config('pelicomp.properties');
 
