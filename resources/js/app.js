@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Utiliser l'événement "tableBuilt" pour savoir quand la table est prête
-    tableTabulator.on("tableBuilt", function(){
+
+    tableTabulator.on("renderComplete", function() {
 
         const triggers = document.querySelectorAll('.add-offer');
         triggers.forEach(el => el.addEventListener('click', event => {
@@ -86,7 +86,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             document.getElementById("add_offer_modal").showModal();
         }));
+    });
 
+    // Utiliser l'événement "tableBuilt" pour savoir quand la table est prête
+    tableTabulator.on("tableBuilt", function(){
 
         const triggerProducts = document.querySelectorAll('.add-products');
         triggerProducts.forEach(el => el.addEventListener('click', event => {
