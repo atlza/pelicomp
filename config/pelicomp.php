@@ -19,7 +19,7 @@ return [
         ],
         'type' => [
             'values' => ['Noir et blanc', 'couleur', 'couleur ciné', 'couleur reversible','panchromatique', 'panchromatique ciné', 'orthochromatique',
-                'orthopanchromatique', 'superpanchromatique', 'hyperpanchromatique', 'monochrome', 'infrared', ['Noir et blanc réversible']],
+                'orthopanchromatique', 'superpanchromatique', 'hyperpanchromatique', 'monochrome', 'infrared', 'Noir et blanc réversible'],
             'mandatory' => true,
         ],
         'qté' => [
